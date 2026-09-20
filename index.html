@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBudget - Personal Finance Journal</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            /* Warm Sage & Cream Theme */
+            --sage-main: #6b8e78;
+            --sage-dark: #4a6854;
+            --sage-light: #eaf1ec;
+            --bg-cream: #faf8f5;
+            --bg-card: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #8c98a4;
+            --border-soft: #f0ebe1;
+            
+            /* Pastel Accent Palette */
+            --pastel-pink: #fde2e4;
+            --pastel-pink-text: #d65a6f;
+            --pastel-blue: #e0f2fe;
+            --pastel-blue-text: #0284c7;
+            --pastel-yellow: #fef3c7;
+            --pastel-yellow-text: #d97706;
+            --pastel-purple: #f3e8ff;
+            --pastel-purple-text: #9333ea;
+            --pastel-green: #dcfce7;
+            --pastel-green-text: #16a34a;
+
+            /* Shadows & Border Radius */
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --shadow-soft: 0 8px 20px rgba(74, 104, 84, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ================= SIDEBAR ================= */
+        .sidebar {
+            width: 270px;
+            background-color: var(--sage-main);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .brand-box {
+            padding: 0 10px 30px 10px;
+        }
+
+        .brand-box h2 {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-box p {
+            color: var(--sage-light);
+            font-size: 12px;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        .menu-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu-item a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--sage-light);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .menu-item a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+
+        .menu-item.active a {
+            background-color: var(--bg-cream);
+            color: var(--sage-dark);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .sidebar-footer-quote {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 16px;
+            border-radius: var(--radius-md);
+            color: #ffffff;
+            font-size: 12px;
+            line-height: 1.5;
+            border: 1px dashed rgba(255, 255, 255, 0.25);
+            text-align: center;
+        }
+
+        /* ================= MAIN CONTENT ================= */
+        .main-content {
+            flex-grow: 1;
+            padding: 32px;
+            overflow-y: auto;
+        }
+
+        /* SISTEM PINDAH HALAMAN */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* --- HEADER --- */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .greeting h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--sage-dark);
+        }
+
+        .greeting p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .header-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .date-badge {
+            background-color: var(--bg-card);
+            padding: 8px 14px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--sage-dark);
+            border: 1px solid var(--border-soft);
+        }
+
+        .notification-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            font-size: 16px;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444;
+            border-radius: 50%;
+        }
+
+        .user-avatar-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            padding: 4px 10px 4px 4px;
+            border-radius: 30px;
+            border: 1px solid var(--border-soft);
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--pastel-pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--pastel-pink-text);
+        }
+
+        /* --- CARD STYLES --- */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-soft);
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .link-btn {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--sage-main);
+            text-decoration: none;
+            transition: opacity 0.2s;
+            cursor: pointer;
+        }
+
+        .link-btn:hover { opacity: 0.8; }
+
+        /* --- SUMMARY GRID --- */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .summary-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-soft);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .summary-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .summary-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .summary-card.saldo .summary-icon { background: var(--pastel-blue); }
+        .summary-card.masuk .summary-icon { background: var(--pastel-green); }
+        .summary-card.keluar .summary-icon { background: var(--pastel-pink); }
+        .summary-card.sisa .summary-icon { background: var(--pastel-yellow); }
+
+        .summary-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .summary-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-top: 4px;
+        }
+
+        .toggle-eye {
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .summary-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* --- DASHBOARD GRID --- */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .grid-full { grid-column: span 2; }
+
+        /* --- CHARTS --- */
+        .chart-flex-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .chart-donut-wrapper {
+            position: relative;
+            width: 170px;
+            height: 170px;
+            flex-shrink: 0;
+        }
+
+        .donut-center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .donut-center-text strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .donut-center-text span {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .category-legend-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            padding: 6px 10px;
+            background: #fcfbfa;
+            border-radius: 8px;
+        }
+
+        .category-item-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .category-item-right { text-align: right; }
+        .category-item-right span { display: block; font-weight: 700; }
+        .category-item-right small { font-size: 10px; color: var(--text-muted); }
+
+        .select-dropdown {
+            background: var(--bg-cream);
+            border: 1px solid var(--border-soft);
+            padding: 6px 12px;
+            border-radius: var(--radius-md);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        /* --- WALLETS --- */
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .wallet-card {
+            background: #fafaf9;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            transition: transform 0.2s ease;
+        }
+
+        .wallet-card:hover { transform: translateY(-2px); }
+
+        .wallet-head {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--sage-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wallet-tag {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin: 6px 0 10px 0;
+            line-height: 1.3;
+        }
+
+        .wallet-balance {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        /* --- TARGETS & PROGRESS --- */
+        .target-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .target-item {
+            background: #fafaf9;
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            border: 1px solid var(--border-soft);
+        }
+
+        .target-head {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .target-sub {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .progress-bar-bg {
+            background-color: var(--border-soft);
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--sage-main), #8cb89c);
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        /* --- TRANSACTIONS --- */
+        .transaction-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border-bottom: 1px dashed var(--border-soft);
+        }
+
+        .transaction-item:last-child { border-bottom: none; }
+
+        .tx-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tx-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--bg-cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .tx-info h4 { font-size: 13px; font-weight: 700; }
+        .tx-info p { font-size: 11px; color: var(--text-muted); }
+        .tx-amount { font-size: 13px; font-weight: 800; }
+        .tx-amount.expense { color: #e11d48; }
+
+        /* --- FORM STYLES --- */
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            outline: none;
+            background: #fafaf9;
+        }
+
+        .btn-sage {
+            background: var(--sage-main);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .btn-sage:hover { background: var(--sage-dark); }
+
+        @media (max-width: 1024px) {
+            .summary-grid { grid-template-columns: repeat(2, 1fr); }
+            .dashboard-layout { grid-template-columns: 1fr; }
+            .grid-full { grid-column: span 1; }
+            .wallet-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .summary-grid { grid-template-columns: 1fr; }
+            .chart-flex-box { flex-direction: column; }
+        }
+
+
+        /* ================= MOBILE OPTIMIZATION ================= */
+        html, body { width: 100%; overflow-x: hidden; }
+        button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+        a, button { touch-action: manipulation; }
+
+        @media (max-width: 768px) {
+            body { display: block; min-height: 100vh; }
+
+            /* Mobile top navigation */
+            .sidebar {
+                width: 100%;
+                height: auto;
+                min-height: 0;
+                padding: 12px 12px 10px;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                box-shadow: 0 4px 14px rgba(0,0,0,.08);
+            }
+            .brand-box { padding: 2px 6px 10px; }
+            .brand-box h2 { font-size: 19px; }
+            .brand-box p { font-size: 10px; margin-top: 2px; }
+            .menu-list {
+                flex-direction: row;
+                gap: 7px;
+                overflow-x: auto;
+                padding: 2px 2px 4px;
+                scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            .menu-list::-webkit-scrollbar { display: none; }
+            .menu-item { flex: 0 0 auto; }
+            .menu-item a {
+                white-space: nowrap;
+                padding: 9px 12px;
+                font-size: 12px;
+                border-radius: 12px;
+            }
+            .sidebar-footer-quote { display: none; }
+
+            .main-content {
+                width: 100%;
+                padding: 16px 12px 28px;
+                overflow: visible;
+            }
+            .top-header {
+                gap: 12px;
+                align-items: flex-start;
+                margin-bottom: 18px;
+            }
+            .greeting { min-width: 0; }
+            .greeting h1 { font-size: 20px; line-height: 1.25; }
+            .greeting p { font-size: 11px; line-height: 1.4; }
+            .header-profile { gap: 7px; }
+            .date-badge { display: none; }
+            .notification-btn { width: 36px; height: 36px; flex: 0 0 36px; }
+            .user-avatar-box { padding: 3px 7px 3px 3px; }
+            .user-avatar { width: 30px; height: 30px; }
+            .user-avatar-box span { display: none; }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                margin-bottom: 16px;
+            }
+            .summary-card { padding: 14px; border-radius: 15px; min-width: 0; }
+            .summary-icon { width: 34px; height: 34px; font-size: 16px; }
+            .summary-label { font-size: 10px; }
+            .summary-value { font-size: 16px; overflow-wrap: anywhere; }
+            .summary-meta { font-size: 9px; line-height: 1.3; }
+            .toggle-eye { font-size: 12px; }
+
+            .dashboard-layout { grid-template-columns: 1fr; gap: 14px; }
+            .grid-full { grid-column: span 1; }
+            .card { padding: 15px; border-radius: 15px; margin-bottom: 0; }
+            .card-header { gap: 10px; align-items: flex-start; }
+            .card-title { font-size: 14px; }
+            .card-subtitle { font-size: 10px; }
+            .link-btn { font-size: 11px; white-space: nowrap; }
+
+            .chart-flex-box { flex-direction: column; gap: 14px; align-items: stretch; }
+            .chart-donut-wrapper { width: 145px; height: 145px; margin: 0 auto; }
+            .category-legend-list { max-height: none; width: 100%; }
+            .category-item { font-size: 10px; padding: 7px 8px; }
+            .category-item-right small { font-size: 9px; }
+
+            .wallet-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+            .wallet-card { padding: 11px; min-width: 0; }
+            .wallet-head { font-size: 11px; }
+            .wallet-tag { font-size: 9px; }
+            .wallet-balance { font-size: 12px; overflow-wrap: anywhere; }
+
+            .transaction-item { padding: 9px 3px; gap: 8px; }
+            .tx-left { min-width: 0; gap: 8px; }
+            .tx-icon { width: 32px; height: 32px; font-size: 15px; flex: 0 0 32px; }
+            .tx-info { min-width: 0; }
+            .tx-info h4 { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .tx-info p { font-size: 9px; }
+            .tx-amount { font-size: 10px; white-space: nowrap; }
+
+            .form-control { min-height: 44px; font-size: 14px; }
+            .btn-sage { min-height: 44px; width: 100%; font-size: 13px; }
+
+            /* Kategori: prevent fixed minimum cards from overflowing narrow phones */
+            #page-kategori > div[style*="minmax(380px"] {
+                grid-template-columns: minmax(0, 1fr) !important;
+                gap: 12px !important;
+            }
+            #page-kategori .card[style*="min-height: 280px"] {
+                min-height: 0 !important;
+                padding: 18px !important;
+            }
+            #page-kategori h3 { font-size: 16px !important; }
+            #page-kategori p { font-size: 12px !important; }
+            #page-kategori button { min-height: 40px; }
+
+            /* Modal */
+            #editBudgetModal { padding: 12px; }
+            #editBudgetModal > div { width: 100% !important; max-width: 420px; padding: 20px !important; }
+            #modalBudgetInput { min-height: 46px; font-size: 16px !important; }
+            #editBudgetModal button { min-height: 42px; }
+
+            /* Trend chart */
+            .card canvas { max-width: 100%; }
+        }
+
+        @media (max-width: 390px) {
+            .main-content { padding-left: 9px; padding-right: 9px; }
+            .summary-grid { gap: 7px; }
+            .summary-card { padding: 11px; }
+            .summary-value { font-size: 14px; }
+            .menu-item a { padding: 8px 10px; font-size: 11px; }
+            .wallet-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ================= SIDEBAR MENU ================= -->
+    <aside class="sidebar">
+        <div>
+            <div class="brand-box">
+                <h2>🌿 MyBudget</h2>
+                <p>Better Plan, Brighter Future ♡</p>
+            </div>
+            
+            <ul class="menu-list">
+                <li class="menu-item active" id="menu-dashboard">
+                    <a onclick="switchPage('dashboard')">🏠 Dashboard</a>
+                </li>
+                <li class="menu-item" id="menu-transaksi">
+                    <a onclick="switchPage('transaksi')">💸 Transaksi</a>
+                </li>
+                <li class="menu-item" id="menu-kategori">
+                    <a onclick="switchPage('kategori')">🏷️ Kategori</a>
+                </li>
+                <li class="menu-item" id="menu-wallet">
+                    <a onclick="switchPage('wallet')">💳 Wallet & Rekening</a>
+                </li>
+                <li class="menu-item" id="menu-target">
+                    <a onclick="switchPage('target')">🎯 Target & Tabungan</a>
+                </li>
+                <li class="menu-item" id="menu-laporan">
+                    <a onclick="switchPage('laporan')">📊 Laporan</a>
+                </li>
+                <li class="menu-item" id="menu-catatan">
+                    <a onclick="switchPage('catatan')">📝 Catatan</a>
+                </li>
+                <li class="menu-item" id="menu-pengingat">
+                    <a onclick="switchPage('pengingat')">🔔 Pengingat</a>
+                </li>
+                <li class="menu-item" id="menu-pengaturan">
+                    <a onclick="switchPage('pengaturan')">⚙️ Pengaturan</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-footer-quote">
+            "Keuangan yang rapi awal dari pikiran yang tenang 🪴"
+        </div>
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-content">
+        
+        <!-- HEADER UTAMA -->
+        <header class="top-header">
+            <div class="greeting">
+                <h1 id="page-title">Hai, Ikka! 👋</h1>
+                <p id="page-subtitle">Yuk, lihat kondisi keuanganmu hari ini.</p>
+            </div>
+            
+            <div class="header-profile">
+                <div class="date-badge">📅 Sep 2026</div>
+                <button class="notification-btn" aria-label="Pengingat & Notifikasi">
+                    🔔
+                    <span class="notification-dot"></span>
+                </button>
+                <div class="user-avatar-box">
+                    <div class="user-avatar">I</div>
+                    <span style="font-size: 12px; font-weight: 700;">Ikka ▾</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ================= HALAMAN 1: DASHBOARD ================= -->
+        <div id="page-dashboard" class="page-section active">
+            <!-- RINGKASAN KEUANGAN -->
+            <section class="summary-grid">
+                <div class="summary-card saldo">
+                    <div class="summary-top">
+                        <div class="summary-icon">💳</div>
+                        <span class="toggle-eye" id="toggleSaldo" onclick="toggleSaldoVisibility()">👁️</span>
+                    </div>
+                    <span class="summary-label">Total Saldo</span>
+                    <div class="summary-value" id="val-saldo">Rp787.000</div>
+                    <div class="summary-meta">Tersimpan di 5 rekening</div>
+                </div>
+
+                <div class="summary-card masuk">
+                    <div class="summary-top"><div class="summary-icon">🟢</div></div>
+                    <span class="summary-label">Total Pemasukan</span>
+                    <div class="summary-value">Rp650.000</div>
+                    <div class="summary-meta">Periode 2 minggu ini</div>
+                </div>
+
+                <div class="summary-card keluar">
+                    <div class="summary-top"><div class="summary-icon">🔴</div></div>
+                    <span class="summary-label">Total Pengeluaran</span>
+                    <div class="summary-value">Rp420.000</div>
+                    <div class="summary-meta">Terlacak dari transaksi</div>
+                </div>
+
+                <div class="summary-card sisa">
+                    <div class="summary-top"><div class="summary-icon">🌱</div></div>
+                    <span class="summary-label">Sisa Anggaran</span>
+                    <div class="summary-value">Rp367.000</div>
+                    <div class="summary-meta">Aman untuk minggu depan</div>
+                </div>
+            </section>
+
+            <!-- DASHBOARD GRID -->
+            <div class="dashboard-layout">
+                <!-- REKAP PENGELUARAN -->
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">📊 Rekap Pengeluaran</div>
+                            <div class="card-subtitle">2 minggu terakhir</div>
+                        </div>
+                    </div>
+                    <div class="chart-flex-box">
+                        <div class="chart-donut-wrapper">
+                            <canvas id="rekapDonutChart"></canvas>
+                            <div class="donut-center-text">
+                                <strong>Rp420k</strong>
+                                <span>Total Out</span>
+                            </div>
+                        </div>
+                        <div class="category-legend-list">
+                            <div class="category-item">
+                                <div class="category-item-left">🍚 Makan & Jajan</div>
+                                <div class="category-item-right"><span>Rp180.000</span><small>42.8%</small></div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-item-left">💧 Operasional</div>
+                                <div class="category-item-right"><span>Rp160.000</span><small>38.0%</small></div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-item-left">🧴 Rumah & Badan</div>
+                                <div class="category-item-right"><span>Rp40.000</span><small>9.5%</small></div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-item-left">🎯 Tabungan</div>
+                                <div class="category-item-right"><span>Rp25.000</span><small>6.0%</small></div>
+                            </div>
+                            <div class="category-item">
+                                <div class="category-item-left">✨ Self Reward</div>
+                                <div class="category-item-right"><span>Rp15.000</span><small>3.6%</small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TREN PENGELUARAN -->
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">📈 Tren Pengeluaran</div>
+                            <div class="card-subtitle">Perkembangan harian</div>
+                        </div>
+                        <select class="select-dropdown">
+                            <option>2 Minggu Terakhir ▾</option>
+                            <option>Bulan Ini ▾</option>
+                        </select>
+                    </div>
+                    <div style="height: 200px; position: relative;">
+                        <canvas id="trendLineChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- WALLET & REKENING -->
+                <div class="card grid-full">
+                    <div class="card-header">
+                        <div class="card-title">💳 Wallet & Rekening</div>
+                        <a class="link-btn" onclick="switchPage('wallet')">Lihat Semua →</a>
+                    </div>
+                    <div class="wallet-grid">
+                        <div class="wallet-card">
+                            <div class="wallet-head"><span>SeaBank</span><span>🌊</span></div>
+                            <div class="wallet-tag">🍚 Jajan & Makan</div>
+                            <div class="wallet-balance">Rp240.000</div>
+                        </div>
+                        <div class="wallet-card">
+                            <div class="wallet-head"><span>AlloBank</span><span>💳</span></div>
+                            <div class="wallet-tag">💧 Kebutuhan Operasional</div>
+                            <div class="wallet-balance">Rp115.000</div>
+                        </div>
+                        <div class="wallet-card">
+                            <div class="wallet-head"><span>DANA+</span><span>📱</span></div>
+                            <div class="wallet-tag">🧴 Rumah & Badan + Self Reward</div>
+                            <div class="wallet-balance">Rp82.000</div>
+                        </div>
+                        <div class="wallet-card">
+                            <div class="wallet-head"><span>DANA Emas</span><span>🪙</span></div>
+                            <div class="wallet-tag">✨ Tabungan Emas</div>
+                            <div class="wallet-balance">Rp150.000</div>
+                        </div>
+                        <div class="wallet-card">
+                            <div class="wallet-head"><span>Bank Jago</span><span>💰</span></div>
+                            <div class="wallet-tag">🔒 Tabungan Utama</div>
+                            <div class="wallet-balance">Rp200.000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TRANSAKSI TERBARU -->
+                <div class="card grid-full">
+                    <div class="card-header">
+                        <div class="card-title">🧾 Transaksi Terbaru</div>
+                        <a class="link-btn" onclick="switchPage('transaksi')">Lihat Semua →</a>
+                    </div>
+                    <div class="transaction-list">
+                        <div class="transaction-item">
+                            <div class="tx-left"><div class="tx-icon">🍚</div><div class="tx-info"><h4>Makan Siang</h4><p>14 Sep 2026 • SeaBank</p></div></div>
+                            <div class="tx-amount expense">- Rp23.000</div>
+                        </div>
+                        <div class="transaction-item">
+                            <div class="tx-left"><div class="tx-icon">🧋</div><div class="tx-info"><h4>Jajan Boba (Self Reward)</h4><p>14 Sep 2026 • SeaBank</p></div></div>
+                            <div class="tx-amount expense">- Rp15.000</div>
+                        </div>
+                        <div class="transaction-item">
+                            <div class="tx-left"><div class="tx-icon">💧</div><div class="tx-info"><h4>Air Galon</h4><p>13 Sep 2026 • AlloBank</p></div></div>
+                            <div class="tx-amount expense">- Rp35.000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= HALAMAN 2: TRANSAKSI ================= -->
+        <div id="page-transaksi" class="page-section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">💸 Catat Transaksi Baru</div>
+                </div>
+                <form onsubmit="alert('Transaksi Berhasil Dicatat! ✨'); return false;">
+                    <div class="form-group">
+                        <label>Nama Transaksi / Keterangan</label>
+                        <input type="text" class="form-control" placeholder="Contoh: Beli Sabun & Sampo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Pilih Kategori</label>
+                        <select class="form-control">
+                            <option>🧴 Kebutuhan Rumah & Badan</option>
+                            <option>💧 Kebutuhan Operasional</option>
+                            <option>🎯 Kategori Tabungan</option>
+                            <option>🍚 Kebutuhan Jajan & Makan</option>
+                            <option>✨ Self Reward</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Nominal (Rp)</label>
+                        <input type="number" class="form-control" placeholder="25000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Rekening / Wallet</label>
+                        <select class="form-control">
+                            <option>🌊 SeaBank</option>
+                            <option>💳 AlloBank</option>
+                            <option>📱 DANA+</option>
+                            <option>💰 Bank Jago</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-sage">💾 Simpan Transaksi</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ================= HALAMAN 3: KATEGORI ================= -->
+        <div id="page-kategori" class="page-section">
+            <!-- HEADER HALAMAN KATEGORI -->
+            <div class="card" style="padding: 28px; margin-bottom: 24px; border-radius: 16px; border: 1px solid #e5e7eb; background: #ffffff;">
+                <div class="card-header" style="margin-bottom: 0;">
+                    <div class="card-title" style="font-size: 22px; font-weight: 800; color: #111827;">🏷️ Kelola Kategori Keuangan 
+                        (2 Mingguan)</div>
+                    <div class="card-subtitle" style="font-size: 14px; margin-top: 6px; color: #6b7280;">Pantau dan sesuaikan alokasi dana serta batas pengeluaran 2 Minggu secara langsung di setiap kategori.</div>
+                </div>
+            </div>
+
+            <!-- GRID CARD KATEGORI BESAR -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 24px;">
+
+                <!-- CARD 1: Kebutuhan Rumah & Badan -->
+                <div class="card" id="card-rumah" style="padding: 28px; border: 1px solid #e5e7eb; border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px; background: #ffffff; position: relative;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <div style="display: flex; align-items: center; gap: 14px;">
+                                <div style="width: 56px; height: 56px; border-radius: 16px; background: #f3e8ff; display: flex; align-items: center; justify-content: center; font-size: 28px;">🧴</div>
+                                <div>
+                                    <h3 style="font-size: 18px; font-weight: 800; margin: 0; color: #111827;">Rumah & Badan</h3>
+                                    <p style="font-size: 13px; color: #6b7280; margin-top: 2px;">Kebersihan, skincare, & perawatan</p>
+                                </div>
+                            </div>
+                            <button onclick="openEditModal('rumah')" style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+                                ✏️ Edit
+                            </button>
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <span id="target-rumah" style="font-size: 13px; font-weight: 700; background: #f3e8ff; color: #6b21a8; padding: 6px 14px; border-radius: 20px; display: inline-block;">
+                                Rp80.000 / 2 mgg
+                            </span>
+                        </div>
+                        <p style="font-size: 14px; color: #4b5563; line-height: 1.6; margin-bottom: 24px;">
+                            Alokasi belanja sampo, sabun mandi, detergen, serta peralatan dan perawatan badan dwimingguan.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="progress-bar-bg" style="height: 12px; margin-bottom: 12px; border-radius: 10px; background: #e5e7eb; overflow: hidden;">
+                            <div id="bar-rumah" class="progress-bar-fill" style="width: 50%; height: 100%; background: #9333ea; border-radius: 10px; transition: width 0.3s;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700;">
+                            <span id="used-rumah" style="color: #6b7280;">Terpakai: Rp40.000</span>
+                            <span id="status-rumah" style="color: #16a34a;">Sisa: Rp40.000 (50%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 2: Kebutuhan Operasional -->
+                <div class="card" id="card-operasional" style="padding: 28px; border: 1px solid #e5e7eb; border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px; background: #ffffff; position: relative;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <div style="display: flex; align-items: center; gap: 14px;">
+                                <div style="width: 56px; height: 56px; border-radius: 16px; background: #dbeafe; display: flex; align-items: center; justify-content: center; font-size: 28px;">💧</div>
+                                <div>
+                                    <h3 style="font-size: 18px; font-weight: 800; margin: 0; color: #111827;">Kebutuhan Operasional</h3>
+                                    <p style="font-size: 13px; color: #6b7280; margin-top: 2px;">Galon, bensin, laundry, & kuota</p>
+                                </div>
+                            </div>
+                            <button onclick="openEditModal('operasional')" style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+                                ✏️ Edit
+                            </button>
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <span id="target-operasional" style="font-size: 13px; font-weight: 700; background: #dbeafe; color: #1e40af; padding: 6px 14px; border-radius: 20px; display: inline-block;">
+                                Rp320.000 / 2 mgg
+                            </span>
+                        </div>
+                        <p style="font-size: 14px; color: #4b5563; line-height: 1.6; margin-bottom: 24px;">
+                            Pengeluaran rutin dwimingguan untuk mobilitas, internet, galon air, laundry, dan perkuliahan.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="progress-bar-bg" style="height: 12px; margin-bottom: 12px; border-radius: 10px; background: #e5e7eb; overflow: hidden;">
+                            <div id="bar-operasional" class="progress-bar-fill" style="width: 50%; height: 100%; background: #2563eb; border-radius: 10px; transition: width 0.3s;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700;">
+                            <span id="used-operasional" style="color: #6b7280;">Terpakai: Rp160.000</span>
+                            <span id="status-operasional" style="color: #16a34a;">Sisa: Rp160.000 (50%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3: Kebutuhan Jajan & Makan -->
+                <div class="card" id="card-jajan" style="padding: 28px; border: 1px solid #e5e7eb; border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px; background: #ffffff; position: relative;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <div style="display: flex; align-items: center; gap: 14px;">
+                                <div style="width: 56px; height: 56px; border-radius: 16px; background: #fce7f3; display: flex; align-items: center; justify-content: center; font-size: 28px;">🍚</div>
+                                <div>
+                                    <h3 style="font-size: 18px; font-weight: 800; margin: 0; color: #111827;">Jajan & Makan</h3>
+                                    <p style="font-size: 13px; color: #6b7280; margin-top: 2px;">Makan harian & camilan</p>
+                                </div>
+                            </div>
+                            <button onclick="openEditModal('jajan')" style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+                                ✏️ Edit
+                            </button>
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <span id="target-jajan" style="font-size: 13px; font-weight: 700; background: #fce7f3; color: #9d174d; padding: 6px 14px; border-radius: 20px; display: inline-block;">
+                                Rp400.000 / 2 mgg
+                            </span>
+                        </div>
+                        <p style="font-size: 14px; color: #4b5563; line-height: 1.6; margin-bottom: 24px;">
+                            Anggaran utama dwimingguan untuk makan sehari-hari, kopi, camilan, dan santapan bersama.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="progress-bar-bg" style="height: 12px; margin-bottom: 12px; border-radius: 10px; background: #e5e7eb; overflow: hidden;">
+                            <div id="bar-jajan" class="progress-bar-fill" style="width: 45%; height: 100%; background: #d97706; border-radius: 10px; transition: width 0.3s;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700;">
+                            <span id="used-jajan" style="color: #6b7280;">Terpakai: Rp180.000</span>
+                            <span id="status-jajan" style="color: #d97706;">Sisa: Rp220.000 (55%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 4: Self Reward -->
+                <div class="card" id="card-reward" style="padding: 28px; border: 1px solid #e5e7eb; border-radius: 16px; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px; background: #ffffff; position: relative;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                            <div style="display: flex; align-items: center; gap: 14px;">
+                                <div style="width: 56px; height: 56px; border-radius: 16px; background: #fef9c3; display: flex; align-items: center; justify-content: center; font-size: 28px;">✨</div>
+                                <div>
+                                    <h3 style="font-size: 18px; font-weight: 800; margin: 0; color: #111827;">Self Reward</h3>
+                                    <p style="font-size: 13px; color: #6b7280; margin-top: 2px;">Apresiasi diri, nonton, & wishlist</p>
+                                </div>
+                            </div>
+                            <button onclick="openEditModal('reward')" style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+                                ✏️ Edit
+                            </button>
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <span id="target-reward" style="font-size: 13px; font-weight: 700; background: #fef9c3; color: #854d0e; padding: 6px 14px; border-radius: 20px; display: inline-block;">
+                                Rp25.000 / 2 mgg
+                            </span>
+                        </div>
+                        <p style="font-size: 14px; color: #4b5563; line-height: 1.6; margin-bottom: 24px;">
+                            Dana apresiasi diri per 2 minggu untuk wishlist kecil, hiburan, atau nonton bioskop.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="progress-bar-bg" style="height: 12px; margin-bottom: 12px; border-radius: 10px; background: #e5e7eb; overflow: hidden;">
+                            <div id="bar-reward" class="progress-bar-fill" style="width: 60%; height: 100%; background: #ca8a04; border-radius: 10px; transition: width 0.3s;"></div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700;">
+                            <span id="used-reward" style="color: #6b7280;">Terpakai: Rp15.000</span>
+                            <span id="status-reward" style="color: #16a34a;">Sisa: Rp10.000 (40%)</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MODAL POPUP EDIT BUDGET -->
+        <div id="editBudgetModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000;">
+            <div style="background: #ffffff; padding: 28px; border-radius: 20px; width: 90%; max-width: 420px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 id="modalCategoryTitle" style="margin: 0; font-size: 18px; font-weight: 800; color: #111827;">Edit Budget</h3>
+                    <button onclick="closeModal()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #9ca3af;">✕</button>
+                </div>
+                <p style="font-size: 13px; color: #6b7280; margin-top: 0; margin-bottom: 16px;">Masukkan batas anggaran dwimingguan (2 minggu) yang baru untuk kategori ini:</p>
+                
+                <div style="margin-bottom: 24px;">
+                    <label style="display: block; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 8px;">Target Budget (Rp)</label>
+                    <input type="number" id="modalBudgetInput" style="width: 100%; padding: 12px 16px; border: 1.5px solid #d1d5db; border-radius: 12px; font-size: 16px; font-weight: 600; box-sizing: border-box; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#4f46e5'" onblur="this.style.borderColor='#d1d5db'" placeholder="Contoh: 400000">
+                </div>
+
+                <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                    <button onclick="closeModal()" style="padding: 10px 18px; border-radius: 10px; border: 1px solid #d1d5db; background: #ffffff; color: #374151; font-size: 14px; font-weight: 600; cursor: pointer;">Batal</button>
+                    <button onclick="saveBudget()" style="padding: 10px 20px; border-radius: 10px; border: none; background: #2563eb; color: #ffffff; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">Simpan</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        // Data Anggaran 2 Mingguan per Kategori
+        const budgets = {
+            rumah: 80000,
+            operasional: 320000,
+            jajan: 400000,
+            reward: 25000
+        };
+
+        // Nama Kategori untuk Header Modal Popup
+        const categoryLabels = {
+            rumah: "🧴 Rumah & Badan",
+            operasional: "💧 Kebutuhan Operasional",
+            jajan: "🍚 Jajan & Makan",
+            reward: "✨ Self Reward"
+        };
+
+        // Data Transaksi Harian
+        let dailyTransactions = [
+            { category: 'rumah', amount: 40000 },
+            { category: 'operasional', amount: 160000 },
+            { category: 'jajan', amount: 180000 },
+            { category: 'reward', amount: 15000 }
+        ];
+
+        let activeEditingCategory = null;
+
+        function updateUI() {
+            Object.keys(budgets).forEach(cat => {
+                const totalBudget = budgets[cat];
+                const spent = dailyTransactions
+                    .filter(t => t.category === cat)
+                    .reduce((sum, t) => sum + t.amount, 0);
+                
+                const percent = totalBudget > 0 ? Math.min(Math.round((spent / totalBudget) * 100), 100) : 100;
+                const remaining = totalBudget - spent;
+                
+                const bar = document.getElementById(`bar-${cat}`);
+                const usedText = document.getElementById(`used-${cat}`);
+                const statusText = document.getElementById(`status-${cat}`);
+                const targetBadge = document.getElementById(`target-${cat}`);
+                
+                if (targetBadge) {
+                    targetBadge.innerText = `Rp${totalBudget.toLocaleString('id-ID')} / 2 mgg`;
+                }
+                
+                if (bar) bar.style.width = `${percent}%`;
+                if (usedText) usedText.innerText = `Terpakai: Rp${spent.toLocaleString('id-ID')}`;
+                
+                if (statusText) {
+                    if (remaining < 0) {
+                        statusText.style.color = '#e11d48';
+                        statusText.innerText = `Overbudget: Rp${Math.abs(remaining).toLocaleString('id-ID')}`;
+                    } else {
+                        statusText.style.color = percent > 85 ? '#d97706' : '#16a34a';
+                        statusText.innerText = `Sisa: Rp${remaining.toLocaleString('id-ID')} (${100 - percent}%)`;
+                    }
+                }
+            });
+        }
+
+        // Buka Modal Pop-up spesifik Kategori
+        function openEditModal(categoryKey) {
+            activeEditingCategory = categoryKey;
+            document.getElementById('modalCategoryTitle').innerText = `Edit Budget: ${categoryLabels[categoryKey]}`;
+            document.getElementById('modalBudgetInput').value = budgets[categoryKey];
+            
+            const modal = document.getElementById('editBudgetModal');
+            modal.style.display = 'flex';
+        }
+
+        // Tutup Modal Pop-up
+        function closeModal() {
+            document.getElementById('editBudgetModal').style.display = 'none';
+            activeEditingCategory = null;
+        }
+
+        // Simpan Anggaran Baru
+        function saveBudget() {
+            const inputVal = document.getElementById('modalBudgetInput').value;
+            if (activeEditingCategory && inputVal !== '' && !isNaN(inputVal) && parseFloat(inputVal) >= 0) {
+                budgets[activeEditingCategory] = parseFloat(inputVal);
+                updateUI();
+                closeModal();
+            } else {
+                alert("Masukkan nominal angka yang valid.");
+            }
+        }
+
+        // Inisialisasi tampilan awal
+        updateUI();
+        </script>
+
+        <!-- ================= HALAMAN 4: WALLET ================= -->
+        <div id="page-wallet" class="page-section">
+            <div class="card">
+                <div class="card-header"><div class="card-title">💳 Daftar Rekening & E-Wallet</div></div>
+                <p style="font-size:13px; color:var(--text-muted);">Kelola detail akun bank, e-wallet, dan alokasi saldo Anda.</p>
+            </div>
+        </div>
+
+        <!-- ================= HALAMAN 5: TARGET ================= -->
+        <div id="page-target" class="page-section">
+            <div class="card">
+                <div class="card-header"><div class="card-title">🎯 Target & Impian Tabungan</div></div>
+                <p style="font-size:13px; color:var(--text-muted);">Pantau dan tambahkan target tabungan baru untuk kebutuhan kuliah atau barang impian.</p>
+            </div>
+        </div>
+
+        <!-- ================= HALAMAN 6: LAPORAN ================= -->
+        <div id="page-laporan" class="page-section">
+            <div class="card">
+                <div class="card-header"><div class="card-title">📊 Laporan & Analisis Keuangan</div></div>
+                <p style="font-size:13px; color:var(--text-muted);">Unduh rekap bulanan atau analisis kebiasaan belanja Anda di sini.</p>
+            </div>
+        </div>
+
+        <!-- ================= HALAMAN 7: CATATAN ================= -->
+        <div id="page-catatan" class="page-section">
+            <div class="card">
+                <div class="card-header"><div class="card-title">📝 Jurnal & Catatan Keuangan</div></div>
+                <p style="font-size:13px; color:var(--text-muted);">Tulis pesan atau evaluasi harian agar tetap hemat!</p>
+            </div>
+        </div>
+
+        <!-- ================= HALAMAN 8: PENGINGAT ================= -->
+        <div id="page-pengingat" class="page-section">
+            <div class="card">
+                <div class="card-header"><div class="card-title">🔔 Pengingat Tagihan & Rutinitas</div></div>
+                <p style="font-size:13px; color:var(--text-muted);">Atur tanggal jatuh tempo bayar kos, iuran kelas, atau kuota internet.</p>
+            </div>
+        </div>
+
+        <!-- ================= HALAMAN 9: PENGATURAN ================= -->
+        <div id="page-pengaturan" class="page-section">
+            <div class="card">
+                <div class="card-header"><div class="card-title">⚙️ Pengaturan Profil & Aplikasi</div></div>
+                <p style="font-size:13px; color:var(--text-muted);">Ubah nama pengguna, ganti tema warna, atau cadangkan data transaksi Anda.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- JS LOGIC UNTUK NAVIGASI & CHART -->
+    <script>
+        // SWAP HALAMAN SIDEBAR
+        function switchPage(pageId) {
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => item.classList.remove('active'));
+
+            const targetSection = document.getElementById('page-' + pageId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            const activeMenu = document.getElementById('menu-' + pageId);
+            if (activeMenu) {
+                activeMenu.classList.add('active');
+            }
+
+            const titleEl = document.getElementById('page-title');
+            const subEl = document.getElementById('page-subtitle');
+
+            const titles = {
+                'dashboard': ['Hai, Ikka! 👋', 'Yuk, lihat kondisi keuanganmu hari ini.'],
+                'transaksi': ['💸 Pencatatan Transaksi', 'Tambah atau edit pemasukan dan pengeluaranmu.'],
+                'kategori': ['🏷️ Kelola Kategori', 'Atur pembagian kategori belanja harianmu.'],
+                'wallet': ['💳 Wallet & Rekening', 'Pantau persebaran uangmu di tiap bank & e-wallet.'],
+                'target': ['🎯 Target & Tabungan', 'Fokus pada impian dan dana daruratmu.'],
+                'laporan': ['📊 Laporan Keuangan', 'Lihat statistik & rekap bulananmu.'],
+                'catatan': ['📝 Catatan & Personal Journal', 'Ruang pengingat dan pesan moral pribadi.'],
+                'pengingat': ['🔔 Pengingat Tagihan', 'Jangan sampai ada tagihan yang terlewat!'],
+                'pengaturan': ['⚙️ Pengaturan', 'Atur preferensi profil dan aplikasi MyBudget.']
+            };
+
+            if (titles[pageId]) {
+                titleEl.innerText = titles[pageId][0];
+                subEl.innerText = titles[pageId][1];
+            }
+        }
+
+        // TOGGLE HIDE/SHOW SALDO
+        let isSaldoHidden = false;
+        function toggleSaldoVisibility() {
+            const saldoEl = document.getElementById('val-saldo');
+            const toggleBtn = document.getElementById('toggleSaldo');
+            if (isSaldoHidden) {
+                saldoEl.innerText = "Rp787.000";
+                toggleBtn.innerText = "👁️";
+                isSaldoHidden = false;
+            } else {
+                saldoEl.innerText = "Rp •••••••";
+                toggleBtn.innerText = "🙈";
+                isSaldoHidden = true;
+            }
+        }
+
+        // CHART 1: DONUT REKAP PENGELUARAN
+        const ctxDonut = document.getElementById('rekapDonutChart').getContext('2d');
+        new Chart(ctxDonut, {
+            type: 'doughnut',
+            data: {
+                labels: ['Jajan & Makan', 'Operasional', 'Rumah & Badan', 'Tabungan', 'Self Reward'],
+                datasets: [{
+                    data: [180000, 160000, 40000, 25000, 15000],
+                    backgroundColor: ['#fde2e4', '#e0f2fe', '#f3e8ff', '#dcfce7', '#fef3c7'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                cutout: '72%',
+                plugins: { legend: { display: false } },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        // CHART 2: LINE TREND PENGELUARAN
+        const ctxLine = document.getElementById('trendLineChart').getContext('2d');
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['1 Sep', '3 Sep', '5 Sep', '7 Sep', '9 Sep', '11 Sep', '13 Sep', '14 Sep'],
+                datasets: [{
+                    label: 'Pengeluaran (Rp)',
+                    data: [15000, 45000, 20000, 80000, 30000, 55000, 35000, 63000],
+                    borderColor: '#6b8e78',
+                    backgroundColor: 'rgba(107, 142, 120, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#4a6854',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { display: false, grid: { display: false } },
+                    x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+</body>
+</html>
