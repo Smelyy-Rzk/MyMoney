@@ -136,7 +136,6 @@
             overflow-y: auto;
         }
 
-        /* SISTEM PINDAH HALAMAN */
         .page-section {
             display: none;
         }
@@ -411,17 +410,6 @@
         .category-item-right span { display: block; font-weight: 700; }
         .category-item-right small { font-size: 10px; color: var(--text-muted); }
 
-        .select-dropdown {
-            background: var(--bg-cream);
-            border: 1px solid var(--border-soft);
-            padding: 6px 12px;
-            border-radius: var(--radius-md);
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-main);
-            outline: none;
-        }
-
         /* --- WALLETS --- */
         .wallet-grid {
             display: grid;
@@ -459,49 +447,6 @@
             font-size: 14px;
             font-weight: 800;
             color: var(--text-main);
-        }
-
-        /* --- TARGETS & PROGRESS --- */
-        .target-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .target-item {
-            background: #fafaf9;
-            border-radius: var(--radius-md);
-            padding: 12px 14px;
-            border: 1px solid var(--border-soft);
-        }
-
-        .target-head {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .target-sub {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .progress-bar-bg {
-            background-color: var(--border-soft);
-            height: 8px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            background: linear-gradient(90deg, var(--sage-main), #8cb89c);
-            height: 100%;
-            border-radius: 10px;
         }
 
         /* --- TRANSACTIONS --- */
@@ -542,6 +487,7 @@
         .tx-info p { font-size: 11px; color: var(--text-muted); }
         .tx-amount { font-size: 13px; font-weight: 800; }
         .tx-amount.expense { color: #e11d48; }
+        .tx-amount.income { color: #16a34a; }
 
         /* --- FORM STYLES --- */
         .form-group {
@@ -578,6 +524,31 @@
 
         .btn-sage:hover { background: var(--sage-dark); }
 
+        /* ANALISIS STYLES */
+        .expression-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+        }
+
+        .expression-box.boros {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+
+        .expression-box.hemat {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+        }
+
+        .expression-emoji {
+            font-size: 42px;
+        }
+
+        /* MOBILE OPTIMIZATION */
         @media (max-width: 1024px) {
             .summary-grid { grid-template-columns: repeat(2, 1fr); }
             .dashboard-layout { grid-template-columns: 1fr; }
@@ -588,144 +559,11 @@
         @media (max-width: 768px) {
             body { flex-direction: column; }
             .sidebar { width: 100%; }
-            .summary-grid { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: repeat(2, 1fr); }
             .chart-flex-box { flex-direction: column; }
-        }
-
-
-        /* ================= MOBILE OPTIMIZATION ================= */
-        html, body { width: 100%; overflow-x: hidden; }
-        button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
-        a, button { touch-action: manipulation; }
-
-        @media (max-width: 768px) {
-            body { display: block; min-height: 100vh; }
-
-            /* Mobile top navigation */
-            .sidebar {
-                width: 100%;
-                height: auto;
-                min-height: 0;
-                padding: 12px 12px 10px;
-                position: sticky;
-                top: 0;
-                z-index: 100;
-                box-shadow: 0 4px 14px rgba(0,0,0,.08);
-            }
-            .brand-box { padding: 2px 6px 10px; }
-            .brand-box h2 { font-size: 19px; }
-            .brand-box p { font-size: 10px; margin-top: 2px; }
-            .menu-list {
-                flex-direction: row;
-                gap: 7px;
-                overflow-x: auto;
-                padding: 2px 2px 4px;
-                scrollbar-width: none;
-                -webkit-overflow-scrolling: touch;
-            }
-            .menu-list::-webkit-scrollbar { display: none; }
-            .menu-item { flex: 0 0 auto; }
-            .menu-item a {
-                white-space: nowrap;
-                padding: 9px 12px;
-                font-size: 12px;
-                border-radius: 12px;
-            }
+            .menu-list { flex-direction: row; overflow-x: auto; }
+            .menu-item a { white-space: nowrap; padding: 8px 12px; font-size: 12px; }
             .sidebar-footer-quote { display: none; }
-
-            .main-content {
-                width: 100%;
-                padding: 16px 12px 28px;
-                overflow: visible;
-            }
-            .top-header {
-                gap: 12px;
-                align-items: flex-start;
-                margin-bottom: 18px;
-            }
-            .greeting { min-width: 0; }
-            .greeting h1 { font-size: 20px; line-height: 1.25; }
-            .greeting p { font-size: 11px; line-height: 1.4; }
-            .header-profile { gap: 7px; }
-            .date-badge { display: none; }
-            .notification-btn { width: 36px; height: 36px; flex: 0 0 36px; }
-            .user-avatar-box { padding: 3px 7px 3px 3px; }
-            .user-avatar { width: 30px; height: 30px; }
-            .user-avatar-box span { display: none; }
-
-            .summary-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 10px;
-                margin-bottom: 16px;
-            }
-            .summary-card { padding: 14px; border-radius: 15px; min-width: 0; }
-            .summary-icon { width: 34px; height: 34px; font-size: 16px; }
-            .summary-label { font-size: 10px; }
-            .summary-value { font-size: 16px; overflow-wrap: anywhere; }
-            .summary-meta { font-size: 9px; line-height: 1.3; }
-            .toggle-eye { font-size: 12px; }
-
-            .dashboard-layout { grid-template-columns: 1fr; gap: 14px; }
-            .grid-full { grid-column: span 1; }
-            .card { padding: 15px; border-radius: 15px; margin-bottom: 0; }
-            .card-header { gap: 10px; align-items: flex-start; }
-            .card-title { font-size: 14px; }
-            .card-subtitle { font-size: 10px; }
-            .link-btn { font-size: 11px; white-space: nowrap; }
-
-            .chart-flex-box { flex-direction: column; gap: 14px; align-items: stretch; }
-            .chart-donut-wrapper { width: 145px; height: 145px; margin: 0 auto; }
-            .category-legend-list { max-height: none; width: 100%; }
-            .category-item { font-size: 10px; padding: 7px 8px; }
-            .category-item-right small { font-size: 9px; }
-
-            .wallet-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-            .wallet-card { padding: 11px; min-width: 0; }
-            .wallet-head { font-size: 11px; }
-            .wallet-tag { font-size: 9px; }
-            .wallet-balance { font-size: 12px; overflow-wrap: anywhere; }
-
-            .transaction-item { padding: 9px 3px; gap: 8px; }
-            .tx-left { min-width: 0; gap: 8px; }
-            .tx-icon { width: 32px; height: 32px; font-size: 15px; flex: 0 0 32px; }
-            .tx-info { min-width: 0; }
-            .tx-info h4 { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-            .tx-info p { font-size: 9px; }
-            .tx-amount { font-size: 10px; white-space: nowrap; }
-
-            .form-control { min-height: 44px; font-size: 14px; }
-            .btn-sage { min-height: 44px; width: 100%; font-size: 13px; }
-
-            /* Kategori: prevent fixed minimum cards from overflowing narrow phones */
-            #page-kategori > div[style*="minmax(380px"] {
-                grid-template-columns: minmax(0, 1fr) !important;
-                gap: 12px !important;
-            }
-            #page-kategori .card[style*="min-height: 280px"] {
-                min-height: 0 !important;
-                padding: 18px !important;
-            }
-            #page-kategori h3 { font-size: 16px !important; }
-            #page-kategori p { font-size: 12px !important; }
-            #page-kategori button { min-height: 40px; }
-
-            /* Modal */
-            #editBudgetModal { padding: 12px; }
-            #editBudgetModal > div { width: 100% !important; max-width: 420px; padding: 20px !important; }
-            #modalBudgetInput { min-height: 46px; font-size: 16px !important; }
-            #editBudgetModal button { min-height: 42px; }
-
-            /* Trend chart */
-            .card canvas { max-width: 100%; }
-        }
-
-        @media (max-width: 390px) {
-            .main-content { padding-left: 9px; padding-right: 9px; }
-            .summary-grid { gap: 7px; }
-            .summary-card { padding: 11px; }
-            .summary-value { font-size: 14px; }
-            .menu-item a { padding: 8px 10px; font-size: 11px; }
-            .wallet-grid { grid-template-columns: 1fr; }
         }
 
     </style>
@@ -760,10 +598,10 @@
                     <a onclick="switchPage('laporan')">📊 Laporan</a>
                 </li>
                 <li class="menu-item" id="menu-catatan">
-                    <a onclick="switchPage('catatan')">📝 Catatan</a>
+                    <a onclick="switchPage('catatan')">📝 Catatan Alokasi</a>
                 </li>
                 <li class="menu-item" id="menu-pengingat">
-                    <a onclick="switchPage('pengingat')">🔔 Pengingat</a>
+                    <a onclick="switchPage('pengingat')">🔔 Pengingat Tagihan</a>
                 </li>
                 <li class="menu-item" id="menu-pengaturan">
                     <a onclick="switchPage('pengaturan')">⚙️ Pengaturan</a>
@@ -801,7 +639,7 @@
 
         <!-- ================= HALAMAN 1: DASHBOARD ================= -->
         <div id="page-dashboard" class="page-section active">
-            <!-- RINGKASAN KEUANGAN -->
+            <!-- RINGKASAN KEUANGAN KOSONG DI AWAL -->
             <section class="summary-grid">
                 <div class="summary-card saldo">
                     <div class="summary-top">
@@ -809,29 +647,29 @@
                         <span class="toggle-eye" id="toggleSaldo" onclick="toggleSaldoVisibility()">👁️</span>
                     </div>
                     <span class="summary-label">Total Saldo</span>
-                    <div class="summary-value" id="val-saldo">Rp787.000</div>
-                    <div class="summary-meta">Tersimpan di 5 rekening</div>
+                    <div class="summary-value" id="val-saldo">Rp0</div>
+                    <div class="summary-meta">Tersimpan di rekening</div>
                 </div>
 
                 <div class="summary-card masuk">
                     <div class="summary-top"><div class="summary-icon">🟢</div></div>
                     <span class="summary-label">Total Pemasukan</span>
-                    <div class="summary-value">Rp650.000</div>
-                    <div class="summary-meta">Periode 2 minggu ini</div>
+                    <div class="summary-value" id="val-masuk">Rp0</div>
+                    <div class="summary-meta">Periode bulan ini</div>
                 </div>
 
                 <div class="summary-card keluar">
                     <div class="summary-top"><div class="summary-icon">🔴</div></div>
                     <span class="summary-label">Total Pengeluaran</span>
-                    <div class="summary-value">Rp420.000</div>
+                    <div class="summary-value" id="val-keluar">Rp0</div>
                     <div class="summary-meta">Terlacak dari transaksi</div>
                 </div>
 
                 <div class="summary-card sisa">
                     <div class="summary-top"><div class="summary-icon">🌱</div></div>
                     <span class="summary-label">Sisa Anggaran</span>
-                    <div class="summary-value">Rp367.000</div>
-                    <div class="summary-meta">Aman untuk minggu depan</div>
+                    <div class="summary-value" id="val-sisa">Rp0</div>
+                    <div class="summary-meta">Status anggaran bersih</div>
                 </div>
             </section>
 
@@ -842,37 +680,29 @@
                     <div class="card-header">
                         <div>
                             <div class="card-title">📊 Rekap Pengeluaran</div>
-                            <div class="card-subtitle">2 minggu terakhir</div>
+                            <div class="card-subtitle">Belum ada pengeluaran</div>
                         </div>
                     </div>
                     <div class="chart-flex-box">
                         <div class="chart-donut-wrapper">
                             <canvas id="rekapDonutChart"></canvas>
                             <div class="donut-center-text">
-                                <strong>Rp420k</strong>
+                                <strong id="donut-total">Rp0</strong>
                                 <span>Total Out</span>
                             </div>
                         </div>
-                        <div class="category-legend-list">
+                        <div class="category-legend-list" id="dashboard-legend">
                             <div class="category-item">
-                                <div class="category-item-left">🍚 Makan & Jajan</div>
-                                <div class="category-item-right"><span>Rp180.000</span><small>42.8%</small></div>
+                                <div class="category-item-left">🍚 Jajan & Makan</div>
+                                <div class="category-item-right"><span>Rp0</span><small>0%</small></div>
                             </div>
                             <div class="category-item">
                                 <div class="category-item-left">💧 Operasional</div>
-                                <div class="category-item-right"><span>Rp160.000</span><small>38.0%</small></div>
+                                <div class="category-item-right"><span>Rp0</span><small>0%</small></div>
                             </div>
                             <div class="category-item">
                                 <div class="category-item-left">🧴 Rumah & Badan</div>
-                                <div class="category-item-right"><span>Rp40.000</span><small>9.5%</small></div>
-                            </div>
-                            <div class="category-item">
-                                <div class="category-item-left">🎯 Tabungan</div>
-                                <div class="category-item-right"><span>Rp25.000</span><small>6.0%</small></div>
-                            </div>
-                            <div class="category-item">
-                                <div class="category-item-left">✨ Self Reward</div>
-                                <div class="category-item-right"><span>Rp15.000</span><small>3.6%</small></div>
+                                <div class="category-item-right"><span>Rp0</span><small>0%</small></div>
                             </div>
                         </div>
                     </div>
@@ -885,17 +715,13 @@
                             <div class="card-title">📈 Tren Pengeluaran</div>
                             <div class="card-subtitle">Perkembangan harian</div>
                         </div>
-                        <select class="select-dropdown">
-                            <option>2 Minggu Terakhir ▾</option>
-                            <option>Bulan Ini ▾</option>
-                        </select>
                     </div>
                     <div style="height: 200px; position: relative;">
                         <canvas id="trendLineChart"></canvas>
                     </div>
                 </div>
 
-                <!-- WALLET & REKENING -->
+                <!-- WALLET & REKENING (Bisa Di-edit Sendiri) -->
                 <div class="card grid-full">
                     <div class="card-header">
                         <div class="card-title">💳 Wallet & Rekening</div>
@@ -903,52 +729,41 @@
                     </div>
                     <div class="wallet-grid">
                         <div class="wallet-card">
-                            <div class="wallet-head"><span>SeaBank</span><span>🌊</span></div>
-                            <div class="wallet-tag">🍚 Jajan & Makan</div>
-                            <div class="wallet-balance">Rp240.000</div>
-                        </div>
-                        <div class="wallet-card">
-                            <div class="wallet-head"><span>AlloBank</span><span>💳</span></div>
-                            <div class="wallet-tag">💧 Kebutuhan Operasional</div>
-                            <div class="wallet-balance">Rp115.000</div>
-                        </div>
-                        <div class="wallet-card">
-                            <div class="wallet-head"><span>DANA+</span><span>📱</span></div>
-                            <div class="wallet-tag">🧴 Rumah & Badan + Self Reward</div>
-                            <div class="wallet-balance">Rp82.000</div>
-                        </div>
-                        <div class="wallet-card">
-                            <div class="wallet-head"><span>DANA Emas</span><span>🪙</span></div>
-                            <div class="wallet-tag">✨ Tabungan Emas</div>
-                            <div class="wallet-balance">Rp150.000</div>
+                            <div class="wallet-head"><span>Bank BTN</span><span>🏛️</span></div>
+                            <div class="wallet-tag">Rekening Utama</div>
+                            <div class="wallet-balance" id="dash-btn">Rp0</div>
                         </div>
                         <div class="wallet-card">
                             <div class="wallet-head"><span>Bank Jago</span><span>💰</span></div>
-                            <div class="wallet-tag">🔒 Tabungan Utama</div>
-                            <div class="wallet-balance">Rp200.000</div>
+                            <div class="wallet-tag">Tabungan</div>
+                            <div class="wallet-balance" id="dash-jago">Rp0</div>
+                        </div>
+                        <div class="wallet-card">
+                            <div class="wallet-head"><span>SeaBank</span><span>🌊</span></div>
+                            <div class="wallet-tag">Harian</div>
+                            <div class="wallet-balance" id="dash-seabank">Rp0</div>
+                        </div>
+                        <div class="wallet-card">
+                            <div class="wallet-head"><span>AlloBank</span><span>💳</span></div>
+                            <div class="wallet-tag">Operasional</div>
+                            <div class="wallet-balance" id="dash-allobank">Rp0</div>
+                        </div>
+                        <div class="wallet-card">
+                            <div class="wallet-head"><span>DANA</span><span>📱</span></div>
+                            <div class="wallet-tag">E-Wallet</div>
+                            <div class="wallet-balance" id="dash-dana">Rp0</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- TRANSAKSI TERBARU -->
+                <!-- TRANSAKSI TERBARU KOSONG -->
                 <div class="card grid-full">
                     <div class="card-header">
                         <div class="card-title">🧾 Transaksi Terbaru</div>
                         <a class="link-btn" onclick="switchPage('transaksi')">Lihat Semua →</a>
                     </div>
-                    <div class="transaction-list">
-                        <div class="transaction-item">
-                            <div class="tx-left"><div class="tx-icon">🍚</div><div class="tx-info"><h4>Makan Siang</h4><p>14 Sep 2026 • SeaBank</p></div></div>
-                            <div class="tx-amount expense">- Rp23.000</div>
-                        </div>
-                        <div class="transaction-item">
-                            <div class="tx-left"><div class="tx-icon">🧋</div><div class="tx-info"><h4>Jajan Boba (Self Reward)</h4><p>14 Sep 2026 • SeaBank</p></div></div>
-                            <div class="tx-amount expense">- Rp15.000</div>
-                        </div>
-                        <div class="transaction-item">
-                            <div class="tx-left"><div class="tx-icon">💧</div><div class="tx-info"><h4>Air Galon</h4><p>13 Sep 2026 • AlloBank</p></div></div>
-                            <div class="tx-amount expense">- Rp35.000</div>
-                        </div>
+                    <div class="transaction-list" id="dashboard-tx-list">
+                        <p style="text-align: center; color: var(--text-muted); font-size: 13px; padding: 15px 0;">Belum ada transaksi terbaru.</p>
                     </div>
                 </div>
             </div>
@@ -960,35 +775,101 @@
                 <div class="card-header">
                     <div class="card-title">💸 Catat Transaksi Baru</div>
                 </div>
-                <form onsubmit="alert('Transaksi Berhasil Dicatat! ✨'); return false;">
+                <form id="form-transaksi" onsubmit="addTransaction(event)">
+                    <div class="form-group">
+                        <label>Jenis Transaksi</label>
+                        <select class="form-control" id="tx-type" required>
+                            <option value="pengeluaran">🔴 Pengeluaran</option>
+                            <option value="pemasukan">🟢 Pemasukan</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label>Nama Transaksi / Keterangan</label>
-                        <input type="text" class="form-control" placeholder="Contoh: Beli Sabun & Sampo" required>
+                        <input type="text" id="tx-title" class="form-control" placeholder="Contoh: Beli Sabun & Sampo" required>
                     </div>
                     <div class="form-group">
                         <label>Pilih Kategori</label>
-                        <select class="form-control">
-                            <option>🧴 Kebutuhan Rumah & Badan</option>
-                            <option>💧 Kebutuhan Operasional</option>
-                            <option>🎯 Kategori Tabungan</option>
-                            <option>🍚 Kebutuhan Jajan & Makan</option>
-                            <option>✨ Self Reward</option>
+                        <select class="form-control" id="tx-category" required>
+                            <option value="Rumah & Badan">🧴 Kebutuhan Rumah & Badan</option>
+                            <option value="Operasional">💧 Kebutuhan Operasional</option>
+                            <option value="Makan & Jajan">🍚 Kebutuhan Jajan & Makan</option>
+                            <option value="Tabungan">🎯 Kategori Tabungan</option>
+                            <option value="Self Reward">✨ Self Reward</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Nominal (Rp)</label>
-                        <input type="number" class="form-control" placeholder="25000" required>
+                        <input type="number" id="tx-amount" class="form-control" placeholder="25000" required>
                     </div>
                     <div class="form-group">
                         <label>Rekening / Wallet</label>
-                        <select class="form-control">
-                            <option>🌊 SeaBank</option>
-                            <option>💳 AlloBank</option>
-                            <option>📱 DANA+</option>
-                            <option>💰 Bank Jago</option>
+                        <select class="form-control" id="tx-wallet" required>
+                            <option value="seabank">🌊 SeaBank</option>
+                            <option value="allobank">💳 AlloBank</option>
+                            <option value="dana">📱 DANA</option>
+                            <option value="jago">💰 Bank Jago</option>
+                            <option value="btn">🏛️ Bank BTN</option>
                         </select>
                     </div>
                     <button type="submit" class="btn-sage">💾 Simpan Transaksi</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📜 Daftar Riwayat Transaksi Harian</div>
+                </div>
+                <div class="transaction-list" id="full-tx-list">
+                    <!-- Ditampilkan via JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Edit Transaksi -->
+        <div id="modal-edit" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 9999;">
+            <div style="background: #fff; padding: 20px; border-radius: 12px; width: 90%; max-width: 400px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                <h3 style="margin-top: 0; margin-bottom: 15px; text-align: center;">✏️ Edit Transaksi</h3>
+                <form onsubmit="saveEditTransaction(event)">
+                    <input type="hidden" id="edit-tx-index">
+                    
+                    <div style="margin-bottom: 10px;">
+                        <label style="font-size: 12px; font-weight: bold;">Jenis Transaksi</label>
+                        <select id="edit-tx-type" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; margin-top: 4px;" required>
+                            <option value="pengeluaran">Pengeluaran 💸</option>
+                            <option value="pemasukan">Pemasukan 💰</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 10px;">
+                        <label style="font-size: 12px; font-weight: bold;">Judul Transaksi</label>
+                        <input type="text" id="edit-tx-title" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; margin-top: 4px;" required>
+                    </div>
+
+                    <div style="margin-bottom: 10px;">
+                        <label style="font-size: 12px; font-weight: bold;">Nominal (Rp)</label>
+                        <input type="number" id="edit-tx-amount" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; margin-top: 4px;" required>
+                    </div>
+
+                    <div style="margin-bottom: 10px;">
+                        <label style="font-size: 12px; font-weight: bold;">Kategori</label>
+                        <input type="text" id="edit-tx-category" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; margin-top: 4px;" required>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="font-size: 12px; font-weight: bold;">Wallet / Rekening</label>
+                        <select id="edit-tx-wallet" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; margin-top: 4px;" required>
+                            <option value="btn">BTN</option>
+                            <option value="jago">Jago</option>
+                            <option value="seabank">SeaBank</option>
+                            <option value="allobank">AlloBank</option>
+                            <option value="dana">DANA</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button type="button" onclick="closeEditModal()" style="padding: 8px 16px; border: none; background: #e2e8f0; border-radius: 6px; cursor: pointer;">Batal</button>
+                        <button type="submit" style="padding: 8px 16px; border: none; background: #6b8e78; color: white; border-radius: 6px; cursor: pointer; font-weight: bold;">Simpan</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -998,8 +879,7 @@
             <!-- HEADER HALAMAN KATEGORI -->
             <div class="card" style="padding: 28px; margin-bottom: 24px; border-radius: 16px; border: 1px solid #e5e7eb; background: #ffffff;">
                 <div class="card-header" style="margin-bottom: 0;">
-                    <div class="card-title" style="font-size: 22px; font-weight: 800; color: #111827;">🏷️ Kelola Kategori Keuangan 
-                        (2 Mingguan)</div>
+                    <div class="card-title" style="font-size: 22px; font-weight: 800; color: #111827;">🏷️ Kelola Kategori Keuangan (2 Mingguan)</div>
                     <div class="card-subtitle" style="font-size: 14px; margin-top: 6px; color: #6b7280;">Pantau dan sesuaikan alokasi dana serta batas pengeluaran 2 Minggu secara langsung di setiap kategori.</div>
                 </div>
             </div>
@@ -1018,13 +898,13 @@
                                     <p style="font-size: 13px; color: #6b7280; margin-top: 2px;">Kebersihan, skincare, & perawatan</p>
                                 </div>
                             </div>
-                            <button onclick="openEditModal('rumah')" style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+                            <button type="button" onclick="openEditModal('rumah')" style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;">
                                 ✏️ Edit
                             </button>
                         </div>
                         <div style="margin-bottom: 16px;">
                             <span id="target-rumah" style="font-size: 13px; font-weight: 700; background: #f3e8ff; color: #6b21a8; padding: 6px 14px; border-radius: 20px; display: inline-block;">
-                                Rp80.000 / 2 mgg
+                                Rp0 / 2 mgg
                             </span>
                         </div>
                         <p style="font-size: 14px; color: #4b5563; line-height: 1.6; margin-bottom: 24px;">
@@ -1033,11 +913,11 @@
                     </div>
                     <div>
                         <div class="progress-bar-bg" style="height: 12px; margin-bottom: 12px; border-radius: 10px; background: #e5e7eb; overflow: hidden;">
-                            <div id="bar-rumah" class="progress-bar-fill" style="width: 50%; height: 100%; background: #9333ea; border-radius: 10px; transition: width 0.3s;"></div>
+                            <div id="bar-rumah" class="progress-bar-fill" style="width: 0%; height: 100%; background: #9333ea; border-radius: 10px; transition: width 0.3s;"></div>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700;">
-                            <span id="used-rumah" style="color: #6b7280;">Terpakai: Rp40.000</span>
-                            <span id="status-rumah" style="color: #16a34a;">Sisa: Rp40.000 (50%)</span>
+                            <span id="used-rumah" style="color: #6b7280;">Terpakai: Rp0</span>
+                            <span id="status-rumah" style="color: #6b7280;">Sisa: Rp0 (Belum di-set)</span>
                         </div>
                     </div>
                 </div>
@@ -1053,13 +933,13 @@
                                     <p style="font-size: 13px; color: #6b7280; margin-top: 2px;">Galon, bensin, laundry, & kuota</p>
                                 </div>
                             </div>
-                            <button onclick="openEditModal('operasional')" style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+                            <button type="button" onclick="openEditModal('operasional')" style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;">
                                 ✏️ Edit
                             </button>
                         </div>
                         <div style="margin-bottom: 16px;">
                             <span id="target-operasional" style="font-size: 13px; font-weight: 700; background: #dbeafe; color: #1e40af; padding: 6px 14px; border-radius: 20px; display: inline-block;">
-                                Rp320.000 / 2 mgg
+                                Rp0 / 2 mgg
                             </span>
                         </div>
                         <p style="font-size: 14px; color: #4b5563; line-height: 1.6; margin-bottom: 24px;">
@@ -1068,11 +948,11 @@
                     </div>
                     <div>
                         <div class="progress-bar-bg" style="height: 12px; margin-bottom: 12px; border-radius: 10px; background: #e5e7eb; overflow: hidden;">
-                            <div id="bar-operasional" class="progress-bar-fill" style="width: 50%; height: 100%; background: #2563eb; border-radius: 10px; transition: width 0.3s;"></div>
+                            <div id="bar-operasional" class="progress-bar-fill" style="width: 0%; height: 100%; background: #2563eb; border-radius: 10px; transition: width 0.3s;"></div>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700;">
-                            <span id="used-operasional" style="color: #6b7280;">Terpakai: Rp160.000</span>
-                            <span id="status-operasional" style="color: #16a34a;">Sisa: Rp160.000 (50%)</span>
+                            <span id="used-operasional" style="color: #6b7280;">Terpakai: Rp0</span>
+                            <span id="status-operasional" style="color: #6b7280;">Sisa: Rp0 (Belum di-set)</span>
                         </div>
                     </div>
                 </div>
@@ -1088,13 +968,13 @@
                                     <p style="font-size: 13px; color: #6b7280; margin-top: 2px;">Makan harian & camilan</p>
                                 </div>
                             </div>
-                            <button onclick="openEditModal('jajan')" style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+                            <button type="button" onclick="openEditModal('jajan')" style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;">
                                 ✏️ Edit
                             </button>
                         </div>
                         <div style="margin-bottom: 16px;">
                             <span id="target-jajan" style="font-size: 13px; font-weight: 700; background: #fce7f3; color: #9d174d; padding: 6px 14px; border-radius: 20px; display: inline-block;">
-                                Rp400.000 / 2 mgg
+                                Rp0 / 2 mgg
                             </span>
                         </div>
                         <p style="font-size: 14px; color: #4b5563; line-height: 1.6; margin-bottom: 24px;">
@@ -1103,11 +983,11 @@
                     </div>
                     <div>
                         <div class="progress-bar-bg" style="height: 12px; margin-bottom: 12px; border-radius: 10px; background: #e5e7eb; overflow: hidden;">
-                            <div id="bar-jajan" class="progress-bar-fill" style="width: 45%; height: 100%; background: #d97706; border-radius: 10px; transition: width 0.3s;"></div>
+                            <div id="bar-jajan" class="progress-bar-fill" style="width: 0%; height: 100%; background: #d97706; border-radius: 10px; transition: width 0.3s;"></div>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700;">
-                            <span id="used-jajan" style="color: #6b7280;">Terpakai: Rp180.000</span>
-                            <span id="status-jajan" style="color: #d97706;">Sisa: Rp220.000 (55%)</span>
+                            <span id="used-jajan" style="color: #6b7280;">Terpakai: Rp0</span>
+                            <span id="status-jajan" style="color: #6b7280;">Sisa: Rp0 (Belum di-set)</span>
                         </div>
                     </div>
                 </div>
@@ -1123,13 +1003,13 @@
                                     <p style="font-size: 13px; color: #6b7280; margin-top: 2px;">Apresiasi diri, nonton, & wishlist</p>
                                 </div>
                             </div>
-                            <button onclick="openEditModal('reward')" style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;" onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
+                            <button type="button" onclick="openEditModal('reward')" style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px 12px; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;">
                                 ✏️ Edit
                             </button>
                         </div>
                         <div style="margin-bottom: 16px;">
                             <span id="target-reward" style="font-size: 13px; font-weight: 700; background: #fef9c3; color: #854d0e; padding: 6px 14px; border-radius: 20px; display: inline-block;">
-                                Rp25.000 / 2 mgg
+                                Rp0 / 2 mgg
                             </span>
                         </div>
                         <p style="font-size: 14px; color: #4b5563; line-height: 1.6; margin-bottom: 24px;">
@@ -1138,11 +1018,11 @@
                     </div>
                     <div>
                         <div class="progress-bar-bg" style="height: 12px; margin-bottom: 12px; border-radius: 10px; background: #e5e7eb; overflow: hidden;">
-                            <div id="bar-reward" class="progress-bar-fill" style="width: 60%; height: 100%; background: #ca8a04; border-radius: 10px; transition: width 0.3s;"></div>
+                            <div id="bar-reward" class="progress-bar-fill" style="width: 0%; height: 100%; background: #ca8a04; border-radius: 10px; transition: width 0.3s;"></div>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700;">
-                            <span id="used-reward" style="color: #6b7280;">Terpakai: Rp15.000</span>
-                            <span id="status-reward" style="color: #16a34a;">Sisa: Rp10.000 (40%)</span>
+                            <span id="used-reward" style="color: #6b7280;">Terpakai: Rp0</span>
+                            <span id="status-reward" style="color: #6b7280;">Sisa: Rp0 (Belum di-set)</span>
                         </div>
                     </div>
                 </div>
@@ -1151,33 +1031,41 @@
         </div>
 
         <!-- MODAL POPUP EDIT BUDGET -->
-        <div id="editBudgetModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000;">
-            <div style="background: #ffffff; padding: 28px; border-radius: 20px; width: 90%; max-width: 420px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);">
+        <div id="editBudgetModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 9999;">
+            <div style="background: #ffffff; padding: 28px; border-radius: 20px; width: 90%; max-width: 420px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h3 id="modalCategoryTitle" style="margin: 0; font-size: 18px; font-weight: 800; color: #111827;">Edit Budget</h3>
-                    <button onclick="closeModal()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #9ca3af;">✕</button>
+                    <button type="button" onclick="closeModal()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #9ca3af;">✕</button>
                 </div>
                 <p style="font-size: 13px; color: #6b7280; margin-top: 0; margin-bottom: 16px;">Masukkan batas anggaran dwimingguan (2 minggu) yang baru untuk kategori ini:</p>
                 
                 <div style="margin-bottom: 24px;">
                     <label style="display: block; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 8px;">Target Budget (Rp)</label>
-                    <input type="number" id="modalBudgetInput" style="width: 100%; padding: 12px 16px; border: 1.5px solid #d1d5db; border-radius: 12px; font-size: 16px; font-weight: 600; box-sizing: border-box; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='#4f46e5'" onblur="this.style.borderColor='#d1d5db'" placeholder="Contoh: 400000">
+                    <input type="number" id="modalBudgetInput" style="width: 100%; padding: 12px 16px; border: 1.5px solid #d1d5db; border-radius: 12px; font-size: 16px; font-weight: 600; box-sizing: border-box; outline: none;" placeholder="Contoh: 400000">
                 </div>
 
                 <div style="display: flex; gap: 12px; justify-content: flex-end;">
-                    <button onclick="closeModal()" style="padding: 10px 18px; border-radius: 10px; border: 1px solid #d1d5db; background: #ffffff; color: #374151; font-size: 14px; font-weight: 600; cursor: pointer;">Batal</button>
-                    <button onclick="saveBudget()" style="padding: 10px 20px; border-radius: 10px; border: none; background: #2563eb; color: #ffffff; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">Simpan</button>
+                    <button type="button" onclick="closeModal()" style="padding: 10px 18px; border-radius: 10px; border: 1px solid #d1d5db; background: #ffffff; color: #374151; font-size: 14px; font-weight: 600; cursor: pointer;">Batal</button>
+                    <button type="button" onclick="saveBudget()" style="padding: 10px 20px; border-radius: 10px; border: none; background: #2563eb; color: #ffffff; font-size: 14px; font-weight: 600; cursor: pointer;">Simpan</button>
                 </div>
             </div>
         </div>
 
         <script>
-        // Data Anggaran 2 Mingguan per Kategori
+        // 1. Data Anggaran Awal Set Rp0
         const budgets = {
-            rumah: 80000,
-            operasional: 320000,
-            jajan: 400000,
-            reward: 25000
+            rumah: 0,
+            operasional: 0,
+            jajan: 0,
+            reward: 0
+        };
+
+        // Warna default tiap kategori
+        const categoryColors = {
+            rumah: '#9333ea',
+            operasional: '#2563eb',
+            jajan: '#d97706',
+            reward: '#ca8a04'
         };
 
         // Nama Kategori untuk Header Modal Popup
@@ -1188,25 +1076,27 @@
             reward: "✨ Self Reward"
         };
 
-        // Data Transaksi Harian
-        let dailyTransactions = [
-            { category: 'rumah', amount: 40000 },
-            { category: 'operasional', amount: 160000 },
-            { category: 'jajan', amount: 180000 },
-            { category: 'reward', amount: 15000 }
-        ];
+        // Array Pengeluaran Transaksi (Dihubungkan)
+        let dailyTransactions = [];
 
         let activeEditingCategory = null;
 
+        // 2. Fungsi Update UI secara Real-Time
         function updateUI() {
             Object.keys(budgets).forEach(cat => {
                 const totalBudget = budgets[cat];
+                
+                // Menghitung total pengeluaran per kategori dari transaksi
                 const spent = dailyTransactions
                     .filter(t => t.category === cat)
                     .reduce((sum, t) => sum + t.amount, 0);
                 
-                const percent = totalBudget > 0 ? Math.min(Math.round((spent / totalBudget) * 100), 100) : 100;
+                // Sisa Budget = Target Budget - Total Pengeluaran
                 const remaining = totalBudget - spent;
+                
+                // Persentase
+                const percentUsed = totalBudget > 0 ? Math.min((spent / totalBudget) * 100, 100) : (spent > 0 ? 100 : 0);
+                const percentRemaining = totalBudget > 0 ? Math.round((remaining / totalBudget) * 100) : 0;
                 
                 const bar = document.getElementById(`bar-${cat}`);
                 const usedText = document.getElementById(`used-${cat}`);
@@ -1217,38 +1107,50 @@
                     targetBadge.innerText = `Rp${totalBudget.toLocaleString('id-ID')} / 2 mgg`;
                 }
                 
-                if (bar) bar.style.width = `${percent}%`;
-                if (usedText) usedText.innerText = `Terpakai: Rp${spent.toLocaleString('id-ID')}`;
+                if (bar) {
+                    bar.style.width = `${percentUsed}%`;
+                    bar.style.background = (remaining < 0 || (totalBudget === 0 && spent > 0)) ? '#e11d48' : categoryColors[cat];
+                }
+                
+                if (usedText) {
+                    usedText.innerText = `Terpakai: Rp${spent.toLocaleString('id-ID')}`;
+                }
                 
                 if (statusText) {
                     if (remaining < 0) {
                         statusText.style.color = '#e11d48';
                         statusText.innerText = `Overbudget: Rp${Math.abs(remaining).toLocaleString('id-ID')}`;
+                    } else if (totalBudget === 0) {
+                        statusText.style.color = '#6b7280';
+                        statusText.innerText = `Sisa: Rp0 (Belum di-set)`;
                     } else {
-                        statusText.style.color = percent > 85 ? '#d97706' : '#16a34a';
-                        statusText.innerText = `Sisa: Rp${remaining.toLocaleString('id-ID')} (${100 - percent}%)`;
+                        statusText.style.color = percentRemaining <= 15 ? '#d97706' : '#16a34a';
+                        statusText.innerText = `Sisa: Rp${remaining.toLocaleString('id-ID')} (${percentRemaining}%)`;
                     }
                 }
             });
         }
 
-        // Buka Modal Pop-up spesifik Kategori
+        // 3. Fungsi Buka Modal Edit Budget
         function openEditModal(categoryKey) {
             activeEditingCategory = categoryKey;
-            document.getElementById('modalCategoryTitle').innerText = `Edit Budget: ${categoryLabels[categoryKey]}`;
-            document.getElementById('modalBudgetInput').value = budgets[categoryKey];
+            const titleEl = document.getElementById('modalCategoryTitle');
+            const inputEl = document.getElementById('modalBudgetInput');
+            const modalEl = document.getElementById('editBudgetModal');
             
-            const modal = document.getElementById('editBudgetModal');
-            modal.style.display = 'flex';
+            if (titleEl) titleEl.innerText = `Edit Budget: ${categoryLabels[categoryKey]}`;
+            if (inputEl) inputEl.value = budgets[categoryKey];
+            if (modalEl) modalEl.style.display = 'flex';
         }
 
-        // Tutup Modal Pop-up
+        // 4. Fungsi Tutup Modal
         function closeModal() {
-            document.getElementById('editBudgetModal').style.display = 'none';
+            const modalEl = document.getElementById('editBudgetModal');
+            if (modalEl) modalEl.style.display = 'none';
             activeEditingCategory = null;
         }
 
-        // Simpan Anggaran Baru
+        // 5. Fungsi Simpan Budget
         function saveBudget() {
             const inputVal = document.getElementById('modalBudgetInput').value;
             if (activeEditingCategory && inputVal !== '' && !isNaN(inputVal) && parseFloat(inputVal) >= 0) {
@@ -1260,8 +1162,24 @@
             }
         }
 
-        // Inisialisasi tampilan awal
-        updateUI();
+        // 6. Fungsi Tambah Transaksi (Panggil dari form pengeluaran Anda)
+        function addTransaction(categoryKey, amount) {
+            const val = parseFloat(amount);
+            if (!categoryKey || isNaN(val) || val <= 0) return;
+
+            dailyTransactions.push({
+                category: categoryKey,
+                amount: val,
+                date: new Date().toISOString()
+            });
+
+            updateUI();
+        }
+
+        // Jalankan Update UI saat halaman selesai memuat
+        document.addEventListener('DOMContentLoaded', () => {
+            updateUI();
+        });
         </script>
 
         <!-- ================= HALAMAN 4: WALLET ================= -->
@@ -1585,151 +1503,843 @@
 
         <!-- ================= HALAMAN 5: TARGET ================= -->
         <div id="page-target" class="page-section">
-            <div class="card">
-                <div class="card-header"><div class="card-title">🎯 Target & Impian Tabungan</div></div>
-                <p style="font-size:13px; color:var(--text-muted);">Pantau dan tambahkan target tabungan baru untuk kebutuhan kuliah atau barang impian.</p>
+            <!-- HEADER TARGET -->
+            <div class="card" style="padding: 24px; margin-bottom: 24px; border-radius: 16px; border: 1px solid #e5e7eb; background: #ffffff;">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0;">
+                    <div>
+                        <div class="card-title" style="font-size: 20px; font-weight: 800; color: #111827;">🎯 Target & Impian Tabungan</div>
+                        <p style="font-size: 13px; color: #6b7280; margin-top: 4px; margin-bottom: 0;">Pantau dan tambahkan target tabungan baru untuk kebutuhan kuliah atau barang impian.</p>
+                    </div>
+                    <button onclick="openAddTargetModal()" style="background: #2563eb; color: #ffffff; border: none; border-radius: 10px; padding: 10px 16px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                        ➕ Tambah Target Baru
+                    </button>
+                </div>
+            </div>
+
+            <!-- GRID CARDS TARGET TABUNGAN -->
+            <div id="target-cards-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 24px;">
+                <!-- Card Target Tabungan akan dirender secara dinamis oleh JS -->
+            </div>
+
+            <!-- RIWAYAT MUTASI TABUNGAN -->
+            <div class="card" style="padding: 20px; border-radius: 16px; border: 1px solid #e5e7eb; background: #ffffff;">
+                <div style="font-size: 16px; font-weight: 700; color: #111827; margin-bottom: 12px;">📊 Mutasi & Riwayat Tabungan</div>
+                <div id="history-target-list" style="display: flex; flex-direction: column; gap: 10px;">
+                    <p style="font-size: 13px; color: #9ca3af; margin: 0;">Belum ada riwayat mutasi tabungan.</p>
+                </div>
             </div>
         </div>
 
-        <!-- ================= HALAMAN 6: LAPORAN ================= -->
+            <!-- ================= MODAL TAMBAH / EDIT TARGET ================= -->
+            <div id="modalTargetForm" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000;">
+                <div style="background: #ffffff; padding: 24px; border-radius: 16px; width: 90%; max-width: 420px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 id="modalTargetFormTitle" style="margin: 0; font-size: 18px; font-weight: 800; color: #111827;">Tambah Target Baru</h3>
+                        <button onclick="closeTargetModals()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #9ca3af;">✕</button>
+                    </div>
+                    
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 6px;">Nama Target / Pos</label>
+                        <input type="text" id="targetName" placeholder="Contoh: Tabungan Laptop" style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 14px; box-sizing: border-box; outline: none;">
+                    </div>
+
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 6px;">Pos / Akun Penyimpanan</label>
+                        <select id="targetSource" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 14px; box-sizing: border-box; outline: none;">
+                            <option value="jago">Bank Jago</option>
+                            <option value="dana">DANA (Emas / Wallet)</option>
+                            <option value="btn">Bank BTN</option>
+                            <option value="seabank">SeaBank</option>
+                            <option value="allobank">Allo Bank</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 6px;">Target Nominal (Rp)</label>
+                        <input type="number" id="targetGoal" placeholder="0" style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 15px; font-weight: 600; box-sizing: border-box; outline: none;">
+                    </div>
+
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button onclick="closeTargetModals()" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #d1d5db; background: #ffffff; font-size: 13px; font-weight: 600; cursor: pointer;">Batal</button>
+                        <button onclick="saveTarget()" style="padding: 8px 16px; border-radius: 8px; border: none; background: #2563eb; color: #ffffff; font-size: 13px; font-weight: 600; cursor: pointer;">Simpan Target</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= MODAL TRANSAKSI TABUNGAN (SETOR / TARIK) ================= -->
+            <div id="modalTargetAction" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000;">
+                <div style="background: #ffffff; padding: 24px; border-radius: 16px; width: 90%; max-width: 420px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 id="modalActionTitle" style="margin: 0; font-size: 18px; font-weight: 800; color: #111827;">Setor ke Tabungan</h3>
+                        <button onclick="closeTargetModals()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #9ca3af;">✕</button>
+                    </div>
+
+                    <p id="actionDescription" style="font-size: 12px; color: #6b7280; margin-top: -10px; margin-bottom: 16px;">
+                        Saldo akan dialokasikan dari akun bank terkait.
+                    </p>
+
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 6px;">Akun Bank / Wallet Terhubung</label>
+                        <select id="actionBankSelect" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 14px; box-sizing: border-box; outline: none;">
+                            <option value="jago">Bank Jago</option>
+                            <option value="dana">DANA</option>
+                            <option value="btn">Bank BTN</option>
+                            <option value="seabank">SeaBank</option>
+                            <option value="allobank">Allo Bank</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 6px;">Nominal (Rp)</label>
+                        <input type="number" id="actionAmount" placeholder="0" style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 15px; font-weight: 600; box-sizing: border-box; outline: none;">
+                    </div>
+
+                    <div id="withdrawTransactionOption" style="display: none; margin-bottom: 20px; padding: 10px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 10px;">
+                        <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: #991b1b; cursor: pointer;">
+                            <input type="checkbox" id="checkRecordAsExpense" checked>
+                            Catat langsung sebagai Transaksi Pengeluaran
+                        </label>
+                        <span style="display: block; font-size: 11px; color: #7f1d1d; margin-top: 4px; margin-left: 20px;">
+                            (Misal: Pemakaian Dana Darurat untuk pengobatan/keperluan mendesak).
+                        </span>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button onclick="closeTargetModals()" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #d1d5db; background: #ffffff; font-size: 13px; font-weight: 600; cursor: pointer;">Batal</button>
+                        <button onclick="executeTargetAction()" id="btnSubmitAction" style="padding: 8px 16px; border-radius: 8px; border: none; background: #2563eb; color: #ffffff; font-size: 13px; font-weight: 600; cursor: pointer;">Proses</button>
+                    </div>
+                </div>
+            </div>
+
+        <script>
+        // Data Target Default sesuai pos yang diminta
+        let targetsData = JSON.parse(localStorage.getItem('my_targets')) || [
+            { id: 1, name: "Tabungan Utama", source: "jago", current: 1500000, goal: 5000000 },
+            { id: 2, name: "Dana Darurat", source: "jago", current: 2000000, goal: 10000000 },
+            { id: 3, name: "Bibit", source: "jago", current: 750000, goal: 3000000 },
+            { id: 4, name: "Emas", source: "dana", current: 500000, goal: 2500000 }
+        ];
+
+        let targetMutations = JSON.parse(localStorage.getItem('my_target_mutations')) || [];
+        let activeTargetId = null;
+        let activeActionType = 'deposit'; // 'deposit' atau 'withdraw'
+
+        const bankNames = {
+            jago: "Bank Jago",
+            dana: "DANA",
+            btn: "Bank BTN",
+            seabank: "SeaBank",
+            allobank: "Allo Bank"
+        };
+
+        function renderTargetsUI() {
+            const container = document.getElementById('target-cards-container');
+            if (!container) return;
+
+            container.innerHTML = targetsData.map(target => {
+                const percent = Math.min(100, Math.round((target.current / target.goal) * 100)) || 0;
+                return `
+                    <div class="card" style="padding: 20px; border: 1px solid #e5e7eb; border-radius: 16px; background: #ffffff; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <div>
+                                    <h4 style="margin: 0; font-size: 16px; font-weight: 700; color: #111827;">${target.name}</h4>
+                                    <span style="font-size: 12px; color: #6b7280;">Pos: <b>${bankNames[target.source] || target.source}</b></span>
+                                </div>
+                                <button onclick="openEditTargetModal(${target.id})" style="background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 8px; padding: 4px 8px; font-size: 11px; font-weight: 600; color: #374151; cursor: pointer;">✏️ Edit Target</button>
+                            </div>
+
+                            <div style="margin-top: 14px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: flex-end;">
+                                <span style="font-size: 18px; font-weight: 800; color: #2563eb;">Rp${target.current.toLocaleString('id-ID')}</span>
+                                <span style="font-size: 12px; color: #6b7280;">dari Rp${target.goal.toLocaleString('id-ID')}</span>
+                            </div>
+
+                            <!-- Progress Bar -->
+                            <div style="width: 100%; height: 8px; background: #f3f4f6; border-radius: 10px; overflow: hidden; margin-bottom: 8px;">
+                                <div style="width: ${percent}%; height: 100%; background: #2563eb; border-radius: 10px; transition: width 0.3s ease;"></div>
+                            </div>
+                            <div style="font-size: 11px; font-weight: 700; color: #059669; text-align: right;">${percent}% Terkumpul</div>
+                        </div>
+
+                        <!-- Tombol Aksi Setor / Tarik -->
+                        <div style="display: flex; gap: 8px; margin-top: 16px;">
+                            <button onclick="openActionModal(${target.id}, 'deposit')" style="flex: 1; padding: 8px; background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer;">➕ Setor / Alokasi</button>
+                            <button onclick="openActionModal(${target.id}, 'withdraw')" style="flex: 1; padding: 8px; background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer;">➖ Ambil / Pakai</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            renderTargetMutations();
+        }
+
+        function renderTargetMutations() {
+            const list = document.getElementById('history-target-list');
+            if (!list) return;
+
+            if (targetMutations.length === 0) {
+                list.innerHTML = `<p style="font-size: 13px; color: #9ca3af; margin: 0;">Belum ada riwayat mutasi tabungan.</p>`;
+                return;
+            }
+
+            list.innerHTML = targetMutations.map(m => {
+                const isDeposit = m.type === 'deposit';
+                return `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: #f9fafb; border-radius: 10px; border: 1px solid #f3f4f6;">
+                        <div>
+                            <div style="font-size: 13px; font-weight: 700; color: #111827;">${isDeposit ? '📥 Alokasi ke' : '📤 Penarikan dari'} ${m.targetName}</div>
+                            <div style="font-size: 11px; color: #6b7280;">${m.date} • Akun: ${bankNames[m.bank] || m.bank} ${m.isExpense ? '(Tercatat Pengeluaran)' : ''}</div>
+                        </div>
+                        <div style="font-size: 13px; font-weight: 800; color: ${isDeposit ? '#059669' : '#dc2626'};">
+                            ${isDeposit ? '+' : '-'}Rp${m.amount.toLocaleString('id-ID')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openAddTargetModal() {
+            activeTargetId = null;
+            document.getElementById('modalTargetFormTitle').innerText = "Tambah Target Baru";
+            document.getElementById('targetName').value = '';
+            document.getElementById('targetGoal').value = '';
+            document.getElementById('modalTargetForm').style.display = 'flex';
+        }
+
+        function openEditTargetModal(id) {
+            const target = targetsData.find(t => t.id === id);
+            if (!target) return;
+
+            activeTargetId = id;
+            document.getElementById('modalTargetFormTitle').innerText = "Edit Target Tabungan";
+            document.getElementById('targetName').value = target.name;
+            document.getElementById('targetSource').value = target.source;
+            document.getElementById('targetGoal').value = target.goal;
+            document.getElementById('modalTargetForm').style.display = 'flex';
+        }
+
+        function saveTarget() {
+            const name = document.getElementById('targetName').value.trim();
+            const source = document.getElementById('targetSource').value;
+            const goal = parseFloat(document.getElementById('targetGoal').value);
+
+            if (!name || isNaN(goal) || goal <= 0) {
+                alert("Harap isi nama target dan nominal target yang valid!");
+                return;
+            }
+
+            if (activeTargetId) {
+                const target = targetsData.find(t => t.id === activeTargetId);
+                if (target) {
+                    target.name = name;
+                    target.source = source;
+                    target.goal = goal;
+                }
+            } else {
+                targetsData.push({
+                    id: Date.now(),
+                    name: name,
+                    source: source,
+                    current: 0,
+                    goal: goal
+                });
+            }
+
+            localStorage.setItem('my_targets', JSON.stringify(targetsData));
+            renderTargetsUI();
+            closeTargetModals();
+        }
+
+        function openActionModal(id, type) {
+            activeTargetId = id;
+            activeActionType = type;
+            const target = targetsData.find(t => t.id === id);
+            if (!target) return;
+
+            document.getElementById('actionBankSelect').value = target.source;
+            document.getElementById('actionAmount').value = '';
+
+            if (type === 'deposit') {
+                document.getElementById('modalActionTitle').innerText = `Setor ke ${target.name}`;
+                document.getElementById('actionDescription').innerText = `Saldo akan dialokasikan dari akun bank untuk menambah tabungan ini.`;
+                document.getElementById('withdrawTransactionOption').style.display = 'none';
+                document.getElementById('btnSubmitAction').style.background = '#2563eb';
+            } else {
+                document.getElementById('modalActionTitle').innerText = `Tarik Dana dari ${target.name}`;
+                document.getElementById('actionDescription').innerText = `Dana tabungan akan ditarik ke akun bank/e-wallet.`;
+                document.getElementById('withdrawTransactionOption').style.display = 'block';
+                document.getElementById('btnSubmitAction').style.background = '#dc2626';
+            }
+
+            document.getElementById('modalTargetAction').style.display = 'flex';
+        }
+
+        function executeTargetAction() {
+            const target = targetsData.find(t => t.id === activeTargetId);
+            const bankKey = document.getElementById('actionBankSelect').value;
+            const amount = parseFloat(document.getElementById('actionAmount').value);
+
+            if (!target || isNaN(amount) || amount <= 0) {
+                alert("Masukkan nominal yang valid!");
+                return;
+            }
+
+            // Ambil data Saldo Wallet
+            let wallets = JSON.parse(localStorage.getItem('my_wallets')) || { btn: 0, jago: 0, seabank: 0, allobank: 0, dana: 0 };
+
+            if (activeActionType === 'deposit') {
+                if ((wallets[bankKey] || 0) < amount) {
+                    alert(`Saldo di ${bankNames[bankKey]} tidak mencukupi untuk dialokasikan!`);
+                    return;
+                }
+
+                // Kurangi saldo bank, tambah saldo target
+                wallets[bankKey] -= amount;
+                target.current += amount;
+
+            } else {
+                // Penarikan / Withdraw
+                if (target.current < amount) {
+                    alert(`Saldo di target ${target.name} tidak mencukupi!`);
+                    return;
+                }
+
+                // Kurangi saldo target, tambah ke bank
+                target.current -= amount;
+                wallets[bankKey] = (wallets[bankKey] || 0) + amount;
+
+                // Jika dicentang sebagai Transaksi Pengeluaran (Pemakaian Dana Darurat / Pengeluaran)
+                const isRecordExpense = document.getElementById('checkRecordAsExpense').checked;
+                if (isRecordExpense) {
+                    let globalTransactions = JSON.parse(localStorage.getItem('my_transactions')) || [];
+                    const now = new Date();
+                    const dateStr = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+
+                    globalTransactions.unshift({
+                        id: Date.now(),
+                        title: `Pemakaian ${target.name}`,
+                        category: "Dana Darurat / Tabungan",
+                        amount: amount,
+                        type: "pengeluaran",
+                        wallet: bankKey,
+                        date: dateStr
+                    });
+
+                    localStorage.setItem('my_transactions', JSON.stringify(globalTransactions));
+                    
+                    // Karena ini pencatatan pengeluaran riil, potong kembali saldo bank yang tadi ditambahkan
+                    wallets[bankKey] -= amount;
+                }
+            }
+
+            // Catat Mutasi Tabungan
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+
+            targetMutations.unshift({
+                targetName: target.name,
+                type: activeActionType,
+                amount: amount,
+                bank: bankKey,
+                isExpense: activeActionType === 'withdraw' && document.getElementById('checkRecordAsExpense').checked,
+                date: dateStr
+            });
+
+            // Simpan ke LocalStorage
+            localStorage.setItem('my_wallets', JSON.stringify(wallets));
+            localStorage.setItem('my_targets', JSON.stringify(targetsData));
+            localStorage.setItem('my_target_mutations', JSON.stringify(targetMutations));
+
+            renderTargetsUI();
+            closeTargetModals();
+        }
+
+        function closeTargetModals() {
+            document.getElementById('modalTargetForm').style.display = 'none';
+            document.getElementById('modalTargetAction').style.display = 'none';
+            activeTargetId = null;
+        }
+
+        // Inisialisasi awal
+        renderTargetsUI();
+        </script>
+
+
+        <!-- ================= HALAMAN 6: LAPORAN (INTERAKTIF + ANALISIS EKSPRESI) ================= -->
         <div id="page-laporan" class="page-section">
             <div class="card">
-                <div class="card-header"><div class="card-title">📊 Laporan & Analisis Keuangan</div></div>
-                <p style="font-size:13px; color:var(--text-muted);">Unduh rekap bulanan atau analisis kebiasaan belanja Anda di sini.</p>
+                <div class="card-header"><div class="card-title">📊 Laporan Keuangan & Analisis Kebiasaan</div></div>
+                
+                <!-- KOTAK EKSPRESI -->
+                <div id="expression-container" class="expression-box hemat">
+                    <div class="expression-emoji" id="exp-emoji">🌿</div>
+                    <div>
+                        <h3 id="exp-title" style="font-size: 16px; font-weight: 800;">Pengeluaran Sangat Terkendali!</h3>
+                        <p id="exp-desc" style="font-size: 13px; color: var(--text-muted);">Kamu belum memiliki pengeluaran berlebih bulan ini. Pertahankan gaya hidup hematmu!</p>
+                    </div>
+                </div>
+
+                <!-- METRIK LAPORAN TERHUBUNG TRANSAKSI -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 15px;">
+                    <div style="background: var(--bg-cream); padding: 15px; border-radius: var(--radius-md);">
+                        <small style="color: var(--text-muted); font-weight: 600;">Total Pemasukan</small>
+                        <h4 id="lap-masuk" style="color: var(--pastel-green-text); font-size: 18px; margin-top: 4px;">Rp0</h4>
+                    </div>
+                    <div style="background: var(--bg-cream); padding: 15px; border-radius: var(--radius-md);">
+                        <small style="color: var(--text-muted); font-weight: 600;">Total Pengeluaran</small>
+                        <h4 id="lap-keluar" style="color: #e11d48; font-size: 18px; margin-top: 4px;">Rp0</h4>
+                    </div>
+                    <div style="background: var(--bg-cream); padding: 15px; border-radius: var(--radius-md);">
+                        <small style="color: var(--text-muted); font-weight: 600;">Rata-Rata Transaksi</small>
+                        <h4 id="lap-rata" style="color: var(--pastel-blue-text); font-size: 18px; margin-top: 4px;">Rp0</h4>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- ================= HALAMAN 7: CATATAN ================= -->
+        <!-- ================= HALAMAN 7: CATATAN ALOKASI ================= -->
         <div id="page-catatan" class="page-section">
             <div class="card">
-                <div class="card-header"><div class="card-title">📝 Jurnal & Catatan Keuangan</div></div>
-                <p style="font-size:13px; color:var(--text-muted);">Tulis pesan atau evaluasi harian agar tetap hemat!</p>
+                <div class="card-header">
+                    <div class="card-title">📝 Catatan Harga & Estimasi Alokasi Kebutuhan</div>
+                </div>
+                <p style="font-size:13px; color:var(--text-muted); margin-bottom: 16px;">Catat daftar kebutuhan rumah/badan yang perlu dibeli agar gampang dialokasikan sewaktu ada uang masuk lagi.</p>
+                
+                <form id="form-note" onsubmit="addNoteItem(event)" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <input type="text" id="note-name" class="form-control" placeholder="Nama barang (misal: Sampo & Sabun)" required>
+                    <input type="number" id="note-price" class="form-control" placeholder="Estimasi Harga (Rp)" required style="width: 200px;">
+                    <button type="submit" class="btn-sage">➕ Tambah</button>
+                </form>
+
+                <div class="transaction-list" id="note-item-list">
+                    <!-- Ditampilkan via JS -->
+                </div>
             </div>
         </div>
 
         <!-- ================= HALAMAN 8: PENGINGAT ================= -->
         <div id="page-pengingat" class="page-section">
             <div class="card">
-                <div class="card-header"><div class="card-title">🔔 Pengingat Tagihan & Rutinitas</div></div>
-                <p style="font-size:13px; color:var(--text-muted);">Atur tanggal jatuh tempo bayar kos, iuran kelas, atau kuota internet.</p>
+                <div class="card-header"><div class="card-title">🔔 Pengingat Tagihan Wajib & Kebutuhan Habis</div></div>
+                <p style="font-size:13px; color:var(--text-muted); margin-bottom: 16px;">Pengingat untuk pembayaran rutin dan status barang yang sudah harus dibeli kembali.</p>
+
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="padding: 14px; background: var(--pastel-yellow); border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong style="color: var(--pastel-yellow-text); font-size: 14px;">🏠 Bayar Kos Bulanan</strong>
+                            <p style="font-size: 12px; color: var(--text-main); margin-top: 2px;">Wajib dibayar per bulan (Jatuh Tempo: Tanggal 1)</p>
+                        </div>
+                        <span style="font-weight: 800; font-size: 13px;">Tagihan Rutin</span>
+                    </div>
+
+                    <div style="padding: 14px; background: var(--pastel-pink); border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong style="color: var(--pastel-pink-text); font-size: 14px;">🧴 Air Galon & Deterjen Habis</strong>
+                            <p style="font-size: 12px; color: var(--text-main); margin-top: 2px;">Keterangan: Sudah habis minggu ini, siap untuk dibeli kembali.</p>
+                        </div>
+                        <span style="font-weight: 800; font-size: 13px; color: #e11d48;">Mau Beli Kembali</span>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- ================= HALAMAN 9: PENGATURAN ================= -->
         <div id="page-pengaturan" class="page-section">
             <div class="card">
-                <div class="card-header"><div class="card-title">⚙️ Pengaturan Profil & Aplikasi</div></div>
-                <p style="font-size:13px; color:var(--text-muted);">Ubah nama pengguna, ganti tema warna, atau cadangkan data transaksi Anda.</p>
+                <div class="card-header"><div class="card-title">⚙️ Pengaturan Aplikasi</div></div>
+                <p style="font-size:13px; color:var(--text-muted); margin-bottom: 16px;">Atur preferensi akun dan data keuangan Anda.</p>
+                <button onclick="clearAllData()" style="background: #ef4444; color: white; border: none; padding: 10px 16px; border-radius: var(--radius-md); font-weight: 700; cursor: pointer;">🗑️ Reset Semua Data ke 0</button>
             </div>
         </div>
 
     </main>
 
-    <!-- JS LOGIC UNTUK NAVIGASI & CHART -->
+    <!-- JS LOGIC -->
     <script>
-        // SWAP HALAMAN SIDEBAR
-        function switchPage(pageId) {
-            const sections = document.querySelectorAll('.page-section');
-            sections.forEach(sec => sec.classList.remove('active'));
+    // 1. Inisialisasi Data & Cek LocalStorage agar tidak hilang saat di-refresh
+    const initialWallets = { btn: 0, jago: 0, seabank: 0, allobank: 0, dana: 0 };
+    const initialNotes = [
+        { name: "Sampo & Sabun Mandi", price: 35000 },
+        { name: "Minyak Goreng & Beras", price: 65000 }
+    ];
 
-            const menuItems = document.querySelectorAll('.menu-item');
-            menuItems.forEach(item => item.classList.remove('active'));
+    const savedData = localStorage.getItem('ikka_app_data');
+    
+    let appData = savedData ? JSON.parse(savedData) : {
+        wallets: { ...initialWallets },
+        transactions: [],
+        notes: [ ...initialNotes ]
+    };
 
-            const targetSection = document.getElementById('page-' + pageId);
-            if (targetSection) {
-                targetSection.classList.add('active');
+    let rekapChartInstance = null;
+    let trendChartInstance = null;
+    let isSaldoHidden = false;
+
+    // Helper untuk menyimpan perubahan data ke browser
+    function saveData() {
+        localStorage.setItem('ikka_app_data', JSON.stringify(appData));
+    }
+
+    function formatRupiah(val) {
+        return 'Rp' + Number(val).toLocaleString('id-ID');
+    }
+
+    function switchPage(pageId) {
+        document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+
+        const targetSection = document.getElementById('page-' + pageId);
+        if (targetSection) targetSection.classList.add('active');
+
+        const activeMenu = document.getElementById('menu-' + pageId);
+        if (activeMenu) activeMenu.classList.add('active');
+
+        const titleEl = document.getElementById('page-title');
+        const subEl = document.getElementById('page-subtitle');
+
+        const titles = {
+            'dashboard': ['Hai, Ikka! 👋', 'Yuk, lihat kondisi keuanganmu hari ini.'],
+            'transaksi': ['💸 Pencatatan Transaksi', 'Tambah atau edit pemasukan dan pengeluaranmu.'],
+            'kategori': ['🏷️ Kelola Kategori', 'Atur pembagian kategori belanja harianmu.'],
+            'wallet': ['💳 Wallet & Rekening', 'Pantau persebaran uangmu di tiap bank & e-wallet.'],
+            'target': ['🎯 Target & Tabungan', 'Fokus pada impian dan dana daruratmu.'],
+            'laporan': ['📊 Laporan Keuangan', 'Lihat analisis ekspresi dan statistik belanja.'],
+            'catatan': ['📝 Catatan Alokasi', 'Catat estimasi belanja kebutuhan rumah & badan.'],
+            'pengingat': ['🔔 Pengingat Tagihan', 'Daftar pengeluaran rutin & barang yang habis.'],
+            'pengaturan': ['⚙️ Pengaturan', 'Atur preferensi profil dan sistem.']
+        };
+
+        if (titles[pageId] && titleEl && subEl) {
+            titleEl.innerText = titles[pageId][0];
+            subEl.innerText = titles[pageId][1];
+        }
+    }
+
+    function toggleSaldoVisibility() {
+        isSaldoHidden = !isSaldoHidden;
+        const totalSaldo = Object.values(appData.wallets).reduce((a, b) => a + b, 0);
+        document.getElementById('val-saldo').innerText = isSaldoHidden ? '••••••••' : formatRupiah(totalSaldo);
+        document.getElementById('toggleSaldo').innerText = isSaldoHidden ? '🙈' : '👁️';
+    }
+
+    function updateUI() {
+        let totalIncome = 0;
+        let totalExpense = 0;
+        
+        appData.transactions.forEach(tx => {
+            if (tx.type === 'pemasukan') totalIncome += tx.amount;
+            else totalExpense += tx.amount;
+        });
+
+        const totalSaldo = Object.values(appData.wallets).reduce((a, b) => a + b, 0);
+
+        if (!isSaldoHidden) {
+            document.getElementById('val-saldo').innerText = formatRupiah(totalSaldo);
+        }
+        document.getElementById('val-masuk').innerText = formatRupiah(totalIncome);
+        document.getElementById('val-keluar').innerText = formatRupiah(totalExpense);
+        document.getElementById('val-sisa').innerText = formatRupiah(totalIncome - totalExpense);
+
+        for (let w in appData.wallets) {
+            if (document.getElementById('dash-' + w)) {
+                document.getElementById('dash-' + w).innerText = formatRupiah(appData.wallets[w]);
             }
-
-            const activeMenu = document.getElementById('menu-' + pageId);
-            if (activeMenu) {
-                activeMenu.classList.add('active');
-            }
-
-            const titleEl = document.getElementById('page-title');
-            const subEl = document.getElementById('page-subtitle');
-
-            const titles = {
-                'dashboard': ['Hai, Ikka! 👋', 'Yuk, lihat kondisi keuanganmu hari ini.'],
-                'transaksi': ['💸 Pencatatan Transaksi', 'Tambah atau edit pemasukan dan pengeluaranmu.'],
-                'kategori': ['🏷️ Kelola Kategori', 'Atur pembagian kategori belanja harianmu.'],
-                'wallet': ['💳 Wallet & Rekening', 'Pantau persebaran uangmu di tiap bank & e-wallet.'],
-                'target': ['🎯 Target & Tabungan', 'Fokus pada impian dan dana daruratmu.'],
-                'laporan': ['📊 Laporan Keuangan', 'Lihat statistik & rekap bulananmu.'],
-                'catatan': ['📝 Catatan & Personal Journal', 'Ruang pengingat dan pesan moral pribadi.'],
-                'pengingat': ['🔔 Pengingat Tagihan', 'Jangan sampai ada tagihan yang terlewat!'],
-                'pengaturan': ['⚙️ Pengaturan', 'Atur preferensi profil dan aplikasi MyBudget.']
-            };
-
-            if (titles[pageId]) {
-                titleEl.innerText = titles[pageId][0];
-                subEl.innerText = titles[pageId][1];
+            if (document.getElementById('w-' + w)) {
+                document.getElementById('w-' + w).innerText = formatRupiah(appData.wallets[w]);
             }
         }
 
-        // TOGGLE HIDE/SHOW SALDO
-        let isSaldoHidden = false;
-        function toggleSaldoVisibility() {
-            const saldoEl = document.getElementById('val-saldo');
-            const toggleBtn = document.getElementById('toggleSaldo');
-            if (isSaldoHidden) {
-                saldoEl.innerText = "Rp787.000";
-                toggleBtn.innerText = "👁️";
-                isSaldoHidden = false;
+        renderTransactions();
+        renderReport(totalIncome, totalExpense);
+        renderNotes();
+        renderCharts(totalExpense);
+    }
+
+    function renderTransactions() {
+        const dashList = document.getElementById('dashboard-tx-list');
+        const fullList = document.getElementById('full-tx-list');
+
+        if (!dashList || !fullList) return;
+
+        if (appData.transactions.length === 0) {
+            const emptyDash = `<p style="text-align: center; color: var(--text-muted); font-size: 13px; padding: 15px 0;">Belum ada transaksi terbaru.</p>`;
+            const emptyFull = `<p style="text-align: center; color: var(--text-muted); font-size: 13px; padding: 15px 0;">Belum ada transaksi recorded.</p>`;
+            dashList.innerHTML = emptyDash;
+            fullList.innerHTML = emptyFull;
+            return;
+        }
+
+        let html = '';
+        appData.transactions.forEach((tx, index) => {
+            const isOut = tx.type === 'pengeluaran';
+            html += `
+                <div class="transaction-item" style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #e8f0eb;">
+                    <div class="tx-left" style="display:flex; align-items:center; gap:10px;">
+                        <div class="tx-icon">${isOut ? '💸' : '💰'}</div>
+                        <div class="tx-info">
+                            <h4 style="margin:0; font-size:14px;">${tx.title}</h4>
+                            <p style="margin:0; font-size:12px; color:var(--text-muted);">${tx.date} • ${tx.wallet.toUpperCase()} (${tx.category})</p>
+                        </div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div class="tx-amount ${isOut ? 'expense' : 'income'}" style="font-weight:bold; font-size:14px; color:${isOut ? '#ef4444' : '#10b981'};">
+                            ${isOut ? '-' : '+'} ${formatRupiah(tx.amount)}
+                        </div>
+                        <div style="margin-top:4px; display:flex; gap:8px; justify-content:flex-end;">
+                            <button onclick="openEditModal(${index})" style="background:none; border:none; color:#0284c7; cursor:pointer; font-size:12px;">✏️ Edit</button>
+                            <button onclick="deleteTransaction(${index})" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:12px;">🗑️ Hapus</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        dashList.innerHTML = html;
+        fullList.innerHTML = html;
+    }
+
+    function addTransaction(e) {
+        e.preventDefault();
+        const type = document.getElementById('tx-type').value;
+        const title = document.getElementById('tx-title').value;
+        const category = document.getElementById('tx-category').value;
+        const amount = parseFloat(document.getElementById('tx-amount').value);
+        const wallet = document.getElementById('tx-wallet').value;
+
+        if (isNaN(amount) || amount <= 0) {
+            alert("Masukkan nominal transaksi yang valid!");
+            return;
+        }
+
+        if (type === 'pengeluaran') {
+            appData.wallets[wallet] -= amount;
+        } else {
+            appData.wallets[wallet] += amount;
+        }
+
+        const date = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+
+        appData.transactions.unshift({ type, title, category, amount, wallet, date });
+
+        document.getElementById('form-transaksi').reset();
+        saveData(); // Simpan otomatis
+        updateUI();
+        alert('Transaksi berhasil dicatat!');
+    }
+
+    // --- FITUR TAMBAHAN: HAPUS & EDIT TRANSAKSI ---
+    function deleteTransaction(index) {
+        if (confirm("Apakah Anda yakin ingin menghapus transaksi ini? Saldo wallet akan disesuaikan kembali.")) {
+            const tx = appData.transactions[index];
+
+            if (tx.type === 'pengeluaran') {
+                appData.wallets[tx.wallet] += tx.amount;
             } else {
-                saldoEl.innerText = "Rp •••••••";
-                toggleBtn.innerText = "🙈";
-                isSaldoHidden = true;
+                appData.wallets[tx.wallet] -= tx.amount;
             }
+
+            appData.transactions.splice(index, 1);
+            saveData();
+            updateUI();
+        }
+    }
+
+    function openEditModal(index) {
+        const tx = appData.transactions[index];
+        const editIndex = document.getElementById('edit-tx-index');
+        const editType = document.getElementById('edit-tx-type');
+        const editTitle = document.getElementById('edit-tx-title');
+        const editAmount = document.getElementById('edit-tx-amount');
+        const editCat = document.getElementById('edit-tx-category');
+        const editWallet = document.getElementById('edit-tx-wallet');
+
+        if (editIndex && editType && editTitle && editAmount) {
+            editIndex.value = index;
+            editType.value = tx.type;
+            editTitle.value = tx.title;
+            editAmount.value = tx.amount;
+            if (editCat) editCat.value = tx.category;
+            if (editWallet) editWallet.value = tx.wallet;
+
+            const modal = document.getElementById('modal-edit');
+            if (modal) modal.style.display = 'flex';
+        } else {
+            alert(`Edit Transaksi: "${tx.title}" (${formatRupiah(tx.amount)})`);
+        }
+    }
+
+    function closeEditModal() {
+        const modal = document.getElementById('modal-edit');
+        if (modal) modal.style.display = 'none';
+    }
+
+    function saveEditTransaction(e) {
+        e.preventDefault();
+        const index = document.getElementById('edit-tx-index').value;
+        const oldTx = appData.transactions[index];
+
+        // Revert saldo lama
+        if (oldTx.type === 'pengeluaran') {
+            appData.wallets[oldTx.wallet] += oldTx.amount;
+        } else {
+            appData.wallets[oldTx.wallet] -= oldTx.amount;
         }
 
-        // CHART 1: DONUT REKAP PENGELUARAN
+        // Ambil data baru
+        const newType = document.getElementById('edit-tx-type').value;
+        const newTitle = document.getElementById('edit-tx-title').value;
+        const newAmount = parseFloat(document.getElementById('edit-tx-amount').value);
+        const newCategory = document.getElementById('edit-tx-category').value;
+        const newWallet = document.getElementById('edit-tx-wallet').value;
+
+        // Terapkan saldo baru
+        if (newType === 'pengeluaran') {
+            appData.wallets[newWallet] -= newAmount;
+        } else {
+            appData.wallets[newWallet] += newAmount;
+        }
+
+        appData.transactions[index] = {
+            ...oldTx,
+            type: newType,
+            title: newTitle,
+            amount: newAmount,
+            category: newCategory,
+            wallet: newWallet
+        };
+
+        closeEditModal();
+        saveData();
+        updateUI();
+    }
+
+    function renderReport(income, expense) {
+        document.getElementById('lap-masuk').innerText = formatRupiah(income);
+        document.getElementById('lap-keluar').innerText = formatRupiah(expense);
+        
+        const count = appData.transactions.length;
+        const avg = count > 0 ? expense / count : 0;
+        document.getElementById('lap-rata').innerText = formatRupiah(avg);
+
+        const expBox = document.getElementById('expression-container');
+        const expEmoji = document.getElementById('exp-emoji');
+        const expTitle = document.getElementById('exp-title');
+        const expDesc = document.getElementById('exp-desc');
+
+        if ((expense > income && income > 0) || expense > 500000) {
+            expBox.className = "expression-box boros";
+            expEmoji.innerText = "😡🔥";
+            expTitle.innerText = "Peringatan: Mode Boros Terdeteksi!";
+            expTitle.style.color = "#b91c1c";
+            expDesc.innerText = "Pengeluaranmu sudah melebihi batas ideal atau pemasukan! Yuk, rem jajan dan fokus ke kebutuhan utama saja!";
+        } else {
+            expBox.className = "expression-box hemat";
+            expEmoji.innerText = "🌿😇";
+            expTitle.innerText = "Kondisi Keuangan Aman & Hemat!";
+            expTitle.style.color = "#15803d";
+            expDesc.innerText = "Pengeluaranmu sangat terkontrol dengan baik. Pertahankan pola alokasi dana seperti ini ya!";
+        }
+    }
+
+    function addNoteItem(e) {
+        e.preventDefault();
+        const name = document.getElementById('note-name').value;
+        const price = parseFloat(document.getElementById('note-price').value);
+
+        appData.notes.push({ name, price });
+        document.getElementById('form-note').reset();
+        saveData(); // Simpan otomatis
+        renderNotes();
+    }
+
+    function renderNotes() {
+        const container = document.getElementById('note-item-list');
+        if (appData.notes.length === 0) {
+            container.innerHTML = `<p style="font-size:12px; color:var(--text-muted);">Belum ada catatan alokasi barang.</p>`;
+            return;
+        }
+
+        let html = '';
+        appData.notes.forEach((item) => {
+            html += `
+                <div class="transaction-item">
+                    <div class="tx-left">
+                        <div class="tx-icon">🧴</div>
+                        <div class="tx-info">
+                            <h4>${item.name}</h4>
+                            <p>Estimasi Alokasi Beli</p>
+                        </div>
+                    </div>
+                    <div style="font-weight:700; color:var(--sage-dark);">
+                        ${formatRupiah(item.price)}
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function renderCharts(totalExpense) {
         const ctxDonut = document.getElementById('rekapDonutChart').getContext('2d');
-        new Chart(ctxDonut, {
+        const ctxTrend = document.getElementById('trendLineChart').getContext('2d');
+
+        document.getElementById('donut-total').innerText = formatRupiah(totalExpense);
+
+        if (rekapChartInstance) rekapChartInstance.destroy();
+        rekapChartInstance = new Chart(ctxDonut, {
             type: 'doughnut',
             data: {
-                labels: ['Jajan & Makan', 'Operasional', 'Rumah & Badan', 'Tabungan', 'Self Reward'],
+                labels: ['Kosong'],
                 datasets: [{
-                    data: [180000, 160000, 40000, 25000, 15000],
-                    backgroundColor: ['#fde2e4', '#e0f2fe', '#f3e8ff', '#dcfce7', '#fef3c7'],
-                    borderWidth: 2,
-                    borderColor: '#ffffff'
+                    data: totalExpense === 0 ? [1] : [totalExpense],
+                    backgroundColor: totalExpense === 0 ? ['#e2e8f0'] : ['#6b8e78'],
+                    borderWidth: 0
                 }]
             },
             options: {
-                cutout: '72%',
-                plugins: { legend: { display: false } },
-                responsive: true,
-                maintainAspectRatio: false
+                cutout: '75%',
+                plugins: { legend: { display: false } }
             }
         });
 
-        // CHART 2: LINE TREND PENGELUARAN
-        const ctxLine = document.getElementById('trendLineChart').getContext('2d');
-        new Chart(ctxLine, {
+        if (trendChartInstance) trendChartInstance.destroy();
+        trendChartInstance = new Chart(ctxTrend, {
             type: 'line',
             data: {
-                labels: ['1 Sep', '3 Sep', '5 Sep', '7 Sep', '9 Sep', '11 Sep', '13 Sep', '14 Sep'],
+                labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'],
                 datasets: [{
-                    label: 'Pengeluaran (Rp)',
-                    data: [15000, 45000, 20000, 80000, 30000, 55000, 35000, 63000],
+                    label: 'Pengeluaran',
+                    data: [0, 0, 0, 0],
                     borderColor: '#6b8e78',
                     backgroundColor: 'rgba(107, 142, 120, 0.1)',
                     fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: '#4a6854',
-                    pointRadius: 4
+                    tension: 0
                 }]
             },
             options: {
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { display: false, grid: { display: false } },
-                    x: { grid: { display: false }, ticks: { font: { size: 10 } } }
-                },
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, min: 0, max: 100000 }
+                },
+                plugins: { legend: { display: false } }
             }
         });
-    </script>
+    }
+
+    function clearAllData() {
+        if (confirm("Yakin ingin mengosongkan kembali seluruh data?")) {
+            appData.wallets = { btn: 0, jago: 0, seabank: 0, allobank: 0, dana: 0 };
+            appData.transactions = [];
+            appData.notes = [];
+            localStorage.removeItem('ikka_app_data'); // Hapus data dari memori browser
+            updateUI();
+        }
+    }
+
+    window.onload = function() {
+        updateUI();
+    };
+</script>
 </body>
 </html>
